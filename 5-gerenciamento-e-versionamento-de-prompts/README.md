@@ -3,11 +3,13 @@
 Os exemplos estão organizados em duas categorias principais de gerenciamento de prompts:
 
 ### 1. Versionamento Local de Prompts
+
 - **Sistema de Registry**: Gerenciamento local usando arquivos YAML estruturados
 - **Versionamento por Diretórios**: Organização hierárquica com versões separadas
 - **Validação Estática**: Testes automatizados para verificar estrutura e sintaxe
 
 ### 2. Versionamento com LangSmith
+
 - **Sincronização Remota**: Push e pull de prompts para/da plataforma LangSmith
 - **Controle de Versões**: Integração com sistema de tags e versionamento do LangSmith
 - **Colaboração**: Compartilhamento e colaboração em equipe através da plataforma
@@ -81,7 +83,7 @@ O sistema de registry permite carregar prompts locais de forma estruturada e ver
 # Agente revisor de código
 python src/agent_code_reviewer.py
 
-# Agente criador de pull requests  
+# Agente criador de pull requests
 python src/agent_pull_request.py
 ```
 

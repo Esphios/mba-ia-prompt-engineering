@@ -14,7 +14,7 @@ msg2 = """
 Classify the log severity.
 
 Input: "Disk usage at 85%."
-Think step by step about why this is INFO, WARNING, or ERROR. 
+Think step by step about why this is INFO, WARNING, or ERROR.
 At the end, give only the final answer after "Answer:".
 """
 
@@ -26,7 +26,7 @@ Answer only with the number of "r".
 
 msg4 = """
 Question: How many "r" are in the word "strawberry"?
-Explain step by step by breaking down each letter in bullet points, pointing out the "r" before giving the final answer. 
+Explain step by step by breaking down each letter in bullet points, pointing out the "r" before giving the final answer.
 Give the final result after "Answer:".
 """
 

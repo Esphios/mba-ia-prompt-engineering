@@ -41,7 +41,7 @@ request = CodeReviewRequest(
 prompt = registry.get_prompt("agent-code-reviewer")
 
 # Load prompt with native LangChain load_prompt
-prompt_template = load_prompt(prompt.path)
+prompt_template = load_prompt(prompt.path, encoding="utf-8")
 
 # Create the model using init_chat_model (LangChain 1.0 recommended way)
 llm = init_chat_model("gpt-4o-mini")

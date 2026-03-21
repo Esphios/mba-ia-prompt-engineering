@@ -38,7 +38,7 @@ request = PullRequestRequest(
 )
 
 prompt = registry.get_prompt("agent-pull-request-creator")
-prompt_template = load_prompt(prompt.path)
+prompt_template = load_prompt(prompt.path, encoding="utf-8")
 
 llm = init_chat_model("gpt-4o-mini")
 

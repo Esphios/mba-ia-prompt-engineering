@@ -9,7 +9,7 @@ Question: What's France's capital?
 Response: Paris
 
 Question: What's Brazil's capital?
-Response: 
+Response:
 """
 
 msg2 = """
@@ -28,7 +28,7 @@ Classify the log severity.
 
 Example 1:
 Input: "Database connection lost at 10:34."
-Output: ERROR  
+Output: ERROR
 
 Example 2:
 Input: "Disk usage at 85%."
@@ -36,11 +36,11 @@ Output: WARNING
 
 Example 3:
 Input: "Database response time is above the threshold at 30ms"
-Output: WARNING  
+Output: WARNING
 
 Example 4:
 Input: "User logged in successfully."
-Output: INFO  
+Output: INFO
 
 Now classify:
 Input: "API response time is above threshold."
@@ -52,63 +52,63 @@ Classify the log severity.
 
 Example 1:
 Input: "Database connection lost at 10:34."
-Output: ERROR  
+Output: ERROR
 
 Example 2:
 Input: "Disk usage at 85%."
-Output: WARNING  
+Output: WARNING
 
 Example 3:
 Input: "User logged in successfully."
-Output: INFO  
+Output: INFO
 
 Example 4:
 Input: "File not found: config.yaml"
-Output: ERROR  
+Output: ERROR
 
 Example 5:
 Input: "High memory usage detected: 75%"
-Output: WARNING  
+Output: WARNING
 
 Example 6:
 Input: "Background job finished"
-Output: INFO  
+Output: INFO
 
 Example 7:
 Input: "Retrying request to payment gateway"
-Output: ERROR  
+Output: ERROR
 
 Example 8:
 Input: "Disk usage at 90%"
-Output: ERROR   // ambíguo: poderia ser WARNING  
+Output: ERROR   // ambíguo: poderia ser WARNING
 
 Example 9:
 Input: "API latency is above threshold"
-Output: WARNING  
+Output: WARNING
 
 Example 10:
 Input: "Scheduled backup completed"
-Output: INFO  
+Output: INFO
 
 Example 11:
 Input: "Low disk space: 15% left"
-Output: WARNING  
+Output: WARNING
 
 Example 12:
 Input: "Low disk space: 5% left"
-Output: ERROR   // ambíguo: WARNING ou ERROR?  
+Output: ERROR   // ambíguo: WARNING ou ERROR?
 
 Example 13:
 Input: "Cache warming completed"
-Output: INFO  
+Output: INFO
 
 Example 14:
 Input: "Connection timeout, retrying..."
-Output: WARNING   // ambíguo: poderia ser ERROR  
+Output: WARNING   // ambíguo: poderia ser ERROR
 
 Example 15:
 Input: "Authentication failed for user admin"
-Output: ERROR  
+Output: ERROR
 
 Now classify:
 Input: "CPU usage is 95%."

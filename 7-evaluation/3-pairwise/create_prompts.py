@@ -14,7 +14,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 def load_yaml_as_chat_template(filename):
     """Loads YAML prompt and converts to ChatPromptTemplate"""
-    with open(os.path.join(script_dir, f"prompts/{filename}"), "r") as f:
+    with open(os.path.join(script_dir, f"prompts/{filename}"), "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
 
     # If has 'messages', creates ChatPromptTemplate

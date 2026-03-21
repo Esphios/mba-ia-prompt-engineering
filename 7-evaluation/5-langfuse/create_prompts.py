@@ -15,7 +15,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 def load_yaml_prompt(filename):
     """Loads YAML prompt and extracts information"""
-    with open(os.path.join(script_dir, f"prompts/{filename}"), "r") as f:
+    with open(os.path.join(script_dir, f"prompts/{filename}"), "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
 
     if "messages" not in config:
@@ -45,10 +45,10 @@ def create_chat_prompt(name: str, messages: list, description: str, labels: list
                 "temperature": 0
             }
         )
-        print(f"✓ Prompt '{name}' created successfully")
+        print(f"[OK] Prompt '{name}' created successfully")
         return prompt
     except Exception as e:
-        print(f"✗ Error creating prompt '{name}': {str(e)}")
+        print(f"[ERROR] Error creating prompt '{name}': {str(e)}")
         raise
 
 if __name__ == "__main__":
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     prompt_code_analyzer_messages = load_yaml_prompt("1-correctness-langfuse.yaml")
 
     # Load judge prompt (text format, not chat)
-    with open(os.path.join(script_dir, "prompts/llm_judge_pairwise.yaml"), "r") as f:
+    with open(os.path.join(script_dir, "prompts/llm_judge_pairwise.yaml"), "r", encoding="utf-8") as f:
         judge_config = yaml.safe_load(f)
         judge_prompt_text = judge_config["template"]
 
@@ -93,9 +93,9 @@ if __name__ == "__main__":
                 "temperature": 0
             }
         )
-        print(f"✓ Prompt '{PROMPT_JUDGE_NAME}' created successfully")
+        print(f"[OK] Prompt '{PROMPT_JUDGE_NAME}' created successfully")
     except Exception as e:
-        print(f"✗ Error creating prompt '{PROMPT_JUDGE_NAME}': {str(e)}")
+        print(f"[ERROR] Error creating prompt '{PROMPT_JUDGE_NAME}': {str(e)}")
 
     # Create Code Analyzer Prompt
     create_chat_prompt(

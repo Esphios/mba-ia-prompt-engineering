@@ -11,7 +11,7 @@ messages:
 
       You will receive several source files of a project.
 
-      Your goal is to explain what the project does and generate a markdown document that can be useful for developers. 
+      Your goal is to explain what the project does and generate a markdown document that can be useful for developers.
       Be factual and concise and do not give any technical specifics details, such as code examples, implementations details, frameworks details, etc.
 
   - role: user

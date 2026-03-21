@@ -15,7 +15,7 @@ spec_to_schema = PromptTemplate.from_template(
 From the following product spec, extract a minimal JSON schema with fields and types.
 Only return JSON. No commentary.
 
-Write all the code using markdown code blocks.  
+Write all the code using markdown code blocks.
 
 Spec:
 {spec}
@@ -27,7 +27,7 @@ schema_to_routes = PromptTemplate.from_template(
 Given the JSON schema below, design REST routes and sketch idiomatic Go handlers for CRUD.
 Keep it concise, production-oriented, and show code snippets.
 
-Write all the code using markdown code blocks.  
+Write all the code using markdown code blocks.
 
 Schema JSON:
 {schema_json}
@@ -72,7 +72,7 @@ result_content = f"""# Prompt Chaining Result
 **Pipeline Models:**
 - Step 1: GPT-3.5-turbo
 - Step 2: GPT-5-mini
-- Step 3: GPT-4o-mini  
+- Step 3: GPT-4o-mini
 
 """
 

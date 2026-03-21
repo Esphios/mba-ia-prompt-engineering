@@ -6,7 +6,7 @@ load_dotenv()
 msg1 = "What's Brazil's capital?"
 
 msg2 = """
-Find the user intent in the following text: 
+Find the user intent in the following text:
 I'm looking for a restaurant around São Paulo who has a good rating for Japanese food.
 """
 

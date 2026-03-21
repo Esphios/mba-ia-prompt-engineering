@@ -5,7 +5,10 @@ __pycache__/
 dist/
 build/
 venv/
+.venv/
 .env
+.env.*
+!.env.example
 *.sqlite3
 *.log
 *.pot
@@ -31,5 +34,4 @@ htmlcov/
 *.rej
 *.ipynb_checkpoints/
 repo_langchain_1.0/
-
 langfuse_repo/
