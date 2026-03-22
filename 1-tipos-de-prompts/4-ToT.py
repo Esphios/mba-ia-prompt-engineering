@@ -42,8 +42,8 @@ llm = ChatOpenAI(model="gpt-4o")
 
 # response1 = llm.invoke(msg1)
 response2 = llm.invoke(msg2)
-# response3 = llm.invoke(msg3)
+response3 = llm.invoke(msg3)
 
 # print_llm_result(msg1, response1)
 print_llm_result(msg2, response2)
-# print_llm_result(msg3, response3)
+print_llm_result(msg3, response3)
