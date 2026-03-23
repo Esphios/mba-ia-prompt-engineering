@@ -1,0 +1,30 @@
+Preinstalled system skills in this Codex setup
+
+Upstream repository:
+https://github.com/openai/skills/tree/main/skills/.system
+
+These are normally preinstalled and do not need to be exported.
+If you want to vendor or reinstall one manually, use the local installer script below.
+
+Local installer script:
+C:\Users\USER\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py
+
+System skills found locally:
+
+1. openai-docs
+Repository:
+https://github.com/openai/skills/tree/main/skills/.system/openai-docs
+Install command:
+python C:\Users\USER\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo openai/skills --path skills/.system/openai-docs
+
+2. skill-creator
+Repository:
+https://github.com/openai/skills/tree/main/skills/.system/skill-creator
+Install command:
+python C:\Users\USER\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo openai/skills --path skills/.system/skill-creator
+
+3. skill-installer
+Repository:
+https://github.com/openai/skills/tree/main/skills/.system/skill-installer
+Install command:
+python C:\Users\USER\.codex\skills\.system\skill-installer\scripts\install-skill-from-github.py --repo openai/skills --path skills/.system/skill-installer
