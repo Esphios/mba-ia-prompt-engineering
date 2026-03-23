@@ -1,0 +1,5 @@
+https://skills.sh/wshobson/agents/grafana-dashboards
+https://skills.sh/github/awesome-copilot/dotnet-best-practices
+https://skills.sh/github/awesome-copilot/dotnet-design-pattern-review
+https://skills.sh/github/awesome-copilot/dotnet-upgrade
+https://skills.sh/jeffallan/claude-skills/dotnet-core-expert
