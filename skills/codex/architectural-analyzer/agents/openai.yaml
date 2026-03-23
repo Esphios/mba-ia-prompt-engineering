@@ -1,0 +1,4 @@
+interface:
+  display_name: "Architectural Analyzer"
+  short_description: "Evidence-based architecture analysis"
+  default_prompt: "Use $architectural-analyzer to inspect this codebase and produce a structured evidence-based architectural analysis report."

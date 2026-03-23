@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex to Gemini Porter"
+  short_description: "Convert Codex skills to Gemini"
+  default_prompt: "Use $port-codex-skill-to-gemini to convert this Codex skill into a Gemini skill and report any lossy conversions."

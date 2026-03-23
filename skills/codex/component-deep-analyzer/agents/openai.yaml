@@ -1,0 +1,4 @@
+interface:
+  display_name: "Component Deep Analyzer"
+  short_description: "Deep component behavior analysis"
+  default_prompt: "Use $component-deep-analyzer to inspect this component and produce a structured deep analysis report."
