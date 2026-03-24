@@ -1,4 +1,0 @@
-﻿interface:
-  display_name: "Enrich Prompt"
-  short_description: "Enriquece prompts apos sanitizacao"
-  default_prompt: "Use $enrich-prompt para sanitizar e enriquecer este prompt, escolhendo os principios mais adequados."

@@ -1,4 +1,0 @@
-﻿interface:
-  display_name: "Sanitize Prompt"
-  short_description: "Higieniza a entrada do prompt"
-  default_prompt: "Use $sanitize-prompt para limpar e estruturar este prompt antes de qualquer enriquecimento."
