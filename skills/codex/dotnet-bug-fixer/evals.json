@@ -1,0 +1,29 @@
+{
+  "skill_name": "dotnet-bug-fixer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The build is failing with an error `NU1301` related to a private NuGet source. Can you fix it?",
+      "expected_output": "The agent should activate the 'dotnet-bug-fixer' skill, identify that the error comes from a broken test project, and propose a solution to build the main project directly, avoiding the broken parts of the solution.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I'm getting a NullReferenceException in the `AdminController`'s `Details` action when the customer identifier doesn't exist. Please fix it.",
+      "expected_output": "The agent should activate the 'dotnet-bug-fixer' skill. It should analyze the relevant controller file, identify the potential for a null object when the customer record is not found, and propose adding a null check before accessing its properties, redirecting to an error page or returning a 'Not Found' result.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "The subscription workflow is allowing users to sign up with an invalid discount code. It needs to be fixed.",
+      "expected_output": "The agent should activate the 'dotnet-bug-fixer' skill. It should investigate the relevant application service that handles the subscription request DTO. The proposed fix should involve adding or strengthening the validation logic for the discount code before processing the subscription.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "The search page is broken. Fix it.",
+      "expected_output": "The agent should recognize the vague prompt and activate the 'dotnet-bug-fixer' skill to start an investigation. It should ask clarifying questions to understand what 'broken' means (e.g., 'What happens when you try to search?', 'Are there any error messages?'). It should then proceed to analyze the relevant controller and search-related service to identify the root cause.",
+      "files": []
+    }
+  ]
+}

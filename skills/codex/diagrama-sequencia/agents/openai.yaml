@@ -1,0 +1,4 @@
+interface:
+  display_name: "Diagrama de Sequencia"
+  short_description: "Rastreia fluxos e gera Mermaid"
+  default_prompt: "Use $diagrama-sequencia para rastrear este metodo ou fluxo e gerar um diagrama de sequencia Mermaid detalhado."

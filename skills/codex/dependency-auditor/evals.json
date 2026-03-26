@@ -1,0 +1,29 @@
+{
+  "skill_name": "dependency-auditor",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Audit the dependencies for the `WebApi` project.",
+      "expected_output": "The agent should use the 'dependency-auditor' skill, inspect the main project file for the `WebApi` application, and generate a report listing key dependencies such as .NET, ASP.NET Core, Dapper, Entity Framework Core, and related packages.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Run a dependency audit for the entire solution.",
+      "expected_output": "The agent should use the 'dependency-auditor' skill, find the main solution file, and analyze the dependencies for all projects within the solution, providing a consolidated report.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "What libraries are we using in this project?",
+      "expected_output": "The agent should interpret this as a request to audit dependencies, activate the 'dependency-auditor' skill, and provide a report based on the main application project or the entire solution.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Which projects are using Dapper?",
+      "expected_output": "The agent should use the 'dependency-auditor' skill. It should scan all `.csproj` files in the solution, identify which modules depend on Dapper, and report those findings.",
+      "files": []
+    }
+  ]
+}

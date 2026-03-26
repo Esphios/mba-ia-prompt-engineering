@@ -5,8 +5,14 @@ description: Audit a project's dependencies and produce a structured report cove
 
 # Dependency Auditor
 
-Use this skill to inspect project dependency manifests and produce a dependency audit report.
+Use this skill to inspect dependency manifests and produce an evidence-based dependency audit report.
 Stay in analysis mode: do not upgrade packages, do not prescribe migrations, and do not modify project source files except when saving the final report requested by the task.
+
+## When To Use
+
+- Assess dependency health before release, modernization, or security review.
+- Identify outdated, deprecated, unsupported, or vulnerable direct dependencies.
+- Review license posture, maintenance risk, and critical usage concentration.
 
 ## Inputs
 
@@ -18,8 +24,9 @@ If no dependency files are detected, explicitly request the file path or confirm
 
 ## Workflow
 
-1. Detect the audit scope.
+1. Detect the audit scope and read repository guidance.
 If the user specifies a folder or ecosystem, audit only that scope. Otherwise audit the whole project.
+Before drawing conclusions, read repository guidance such as `AGENTS.md`, `GEMINI.md`, `README.md`, and any dependency-management docs when present.
 
 2. Gather dependency evidence.
 Inspect manifests, lockfiles, and dependency-related repository metadata across all relevant ecosystems.
@@ -50,6 +57,14 @@ Return a Markdown report named `Dependency Audit Report` using the structure bel
 Save the full report to `/docs/agents/dependency-auditor/dependencies-report-{YYYY-MM-DD-HH:mm:ss}.md` unless the user explicitly provides another path.
 If no orchestrator agent exists, add a short plain-text status line after the report with the saved relative path.
 
+## Verification Rules
+
+- Treat repository manifests and lockfiles as the source of truth for declared versions.
+- Use authoritative external sources for latest versions, advisories, maintenance signals, and licenses when available.
+- Separate `Verified`, `Partially Verified`, and `Unverified` findings when needed.
+- If internet or registry access is unavailable, explicitly state the limitation and avoid guessing.
+- Cite the basis for each high-severity finding.
+
 ## .NET Framework Guidance
 
 When the project is a .NET Framework solution, treat these dependency sources as primary:
@@ -68,7 +83,7 @@ For .NET Framework dependency audits, distinguish:
 
 Pay attention to common .NET Framework dependency risk signals:
 
-- outdated `System.Web`-era libraries, MVC/Web API packages, OWIN packages, WCF-related packages, JSON serializers, logging frameworks, DI containers, and old EF packages
+- outdated `System.Web`-era libraries, MVC or Web API packages, OWIN packages, WCF-related packages, JSON serializers, logging frameworks, DI containers, and old EF packages
 - manually copied DLLs, vendor binaries, or private `lib/` folders with unclear provenance
 - binding redirects masking version drift
 - mismatches between `packages.config`, actual referenced DLL versions, and deployed expectations
@@ -112,6 +127,7 @@ Analyze up to 10 critical files that rely on risky dependencies.
 Summarize how risky or business-critical dependencies are used in the project and where the integration appears.
 
 Always use relative paths when referencing files inside the report.
+Keep the report descriptive and evidence-driven. Do not add upgrade recommendations unless the user explicitly asks for them outside this skill's normal scope.
 
 ## Ambiguity Handling
 

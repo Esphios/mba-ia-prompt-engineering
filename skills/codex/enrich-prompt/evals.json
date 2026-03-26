@@ -1,0 +1,29 @@
+{
+  "skill_name": "enrich-prompt",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "enrich the prompt",
+      "expected_output": "The agent should activate the 'enrich-prompt' skill and rewrite the vague prompt into a more specific and actionable one, likely by adding role-playing, specifying context, and asking for a clear output format.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "enrich the prompt to refactor the `AdminController`",
+      "expected_output": "The agent should activate the 'enrich-prompt' skill. It should enrich the prompt to be more specific, asking for the *goal* of the refactoring. For example: 'You are an expert C# developer specializing in Clean Architecture. Your task is to refactor the `AdminController.cs` file. Analyze its methods and dependencies to identify areas for improvement, such as reducing complexity, improving readability, or better separating concerns. Propose specific changes and explain the benefits.'",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "enrich the prompt to optimize the performance of the `Get` method in `ItemsController`",
+      "expected_output": "The agent should activate the 'enrich-prompt' skill. It should transform the prompt into a structured request for performance analysis and optimization, specifying the need to identify bottlenecks, measure performance, and propose concrete solutions with code examples.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "enrich the prompt to write documentation about the product",
+      "expected_output": "The agent should activate the 'enrich-prompt' skill. It should enrich the prompt to define the audience, scope, and desired format of the documentation. For example: 'Generate a technical overview document for new developers joining the product team. The document should cover the high-level architecture, key components, setup instructions, and coding conventions. The output should be in Markdown format.'",
+      "files": []
+    }
+  ]
+}

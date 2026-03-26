@@ -1,0 +1,29 @@
+{
+  "skill_name": "component-deep-analyzer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Can you analyze the 'WebApi.Controllers.AdminController' component and tell me what it does?",
+      "expected_output": "The agent should activate the 'component-deep-analyzer' skill, read 'src/WebApi/Controllers/AdminController.cs', and produce a report describing its responsibilities, dependencies (such as `ISearchService` and `IUserService`), and key actions (such as `Dashboard`, `Accounts`, `Search`, and `ContactFeedback`).",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Give me a deep analysis of the `Application` layer.",
+      "expected_output": "The agent should activate the 'component-deep-analyzer' skill. It should identify the main application-layer project file and analyze that layer as a whole, describing its purpose (orchestrating use cases), its main dependencies (such as domain and query/data-access modules), and mentioning key subdirectories like `Services`, `Dtos`, and `Interfaces`.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Analyze the `appsettings.json` file in the web application.",
+      "expected_output": "The agent should activate the 'component-deep-analyzer' skill, read the web application's `appsettings.json`, and report on its structure and purpose, identifying key configuration sections like `ConnectionStrings`, `Logging`, `AllowedHosts`, and any application-specific settings.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Tell me about the `Domain` layer.",
+      "expected_output": "The agent should recognize `Domain` as a component or project, activate the 'component-deep-analyzer' skill, and provide an analysis of that layer, explaining that it contains the core business logic and entities and should not depend on outer layers.",
+      "files": []
+    }
+  ]
+}

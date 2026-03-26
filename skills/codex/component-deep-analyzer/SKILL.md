@@ -5,8 +5,14 @@ description: Perform deep technical analysis of a software component and produce
 
 # Component Deep Analyzer
 
-Use this skill to inspect a specific component or service boundary and produce a deep analysis report.
+Use this skill to inspect a specific component or service boundary and produce a deep, evidence-based analysis report.
 Stay in analysis mode: do not refactor, do not propose implementation changes, and do not modify project source files except when saving the final report requested by the task.
+
+## When To Use
+
+- Explain how a service, module, package, or bounded component actually works.
+- Deep-dive a component identified as critical by an architecture report.
+- Map business rules, data flow, dependencies, endpoints, tests, and risk inside one boundary.
 
 ## Inputs
 
@@ -24,9 +30,10 @@ If no component path, component name, or architecture report is available, reque
 
 ## Workflow
 
-1. Detect the component scope.
+1. Detect the component scope and read repository guidance.
 If the user provides a component path, analyze that boundary.
 If the user provides only a component name, resolve it best-effort from repository structure, naming, and any architecture report, then state the assumed boundary explicitly.
+Before drawing conclusions, read repository guidance such as `AGENTS.md`, `GEMINI.md`, `README.md`, and any component-local docs when present.
 
 2. Gather component evidence.
 Inspect implementation files, interfaces, configuration, tests, documentation, manifests, and relevant supporting files outside the component boundary such as shared schemas or shared tests.
@@ -35,14 +42,14 @@ Inspect implementation files, interfaces, configuration, tests, documentation, m
 Map entry points, processing steps, validations, state changes, integrations, and outputs.
 Separate observed behavior from inferred runtime behavior.
 Map compile-time dependencies directly from code and configuration.
-Map runtime dependencies and flows only when they are evidenced or strongly implied by concrete artifacts; otherwise mark them as inferred.
+Map runtime dependencies and flows only when they are evidenced or strongly implied by concrete artifacts. Otherwise mark them as inferred.
 
 4. Extract business rules and domain logic.
 Document only material rules supported by code, tests, configuration, or documentation.
 Use confidence indicators when the rule is implicit rather than explicit.
 
 5. Analyze structure and dependencies.
-Describe internal organization, direct dependencies, inferred runtime links, integration points, design patterns, and afferent/efferent coupling.
+Describe internal organization, direct dependencies, inferred runtime links, integration points, design patterns, and afferent and efferent coupling.
 If exact counts are not feasible, provide best-effort estimates and explain the basis.
 Analyze data models, schemas, and validation rules.
 
@@ -57,6 +64,14 @@ Return a Markdown report named `Component Deep Analysis Report` using the struct
 Save the full report to `/docs/agents/component-deep-analyzer/component-analysis-{component-name}-{YYYY-MM-DD-HH:mm:ss}.md` unless the user explicitly provides another path.
 If no orchestrator agent exists, add a short plain-text status line after the report with the saved relative path.
 
+## Evidence Rules
+
+- Separate `Observed`, `Inferred`, and `Unknown` when the distinction matters.
+- Ground business rules in code, tests, configuration, or documentation.
+- Cite relative paths and line numbers for key findings.
+- Explain the basis for coupling counts or estimates before presenting them.
+- If runtime behavior is only implied, call that out instead of presenting it as confirmed.
+
 ## .NET Framework Guidance
 
 When the analyzed component belongs to a .NET Framework solution, inspect these artifacts first:
@@ -68,11 +83,11 @@ When the analyzed component belongs to a .NET Framework solution, inspect these 
 - Web Forms artifacts such as `.aspx`, `.ascx`, `.master`, and their code-behind files
 - WCF artifacts such as `*.svc`, service contracts, data contracts, and generated clients
 - Data access code such as `DbContext`, EDMX, repositories, unit-of-work implementations, LINQ queries, ADO.NET commands, stored procedure wrappers
-- Background processing or integration code such as Windows services, timers, Quartz/Hangfire jobs, MSMQ handlers, scheduled tasks
+- Background processing or integration code such as Windows services, timers, Quartz or Hangfire jobs, MSMQ handlers, scheduled tasks
 
 For .NET Framework components, pay special attention to these common patterns:
 
-- controller or page -> application service -> domain/service -> repository -> database
+- controller or page to application service to domain service to repository to database
 - heavy use of configuration-driven behavior in `web.config` or `app.config`
 - custom attributes, action filters, base controllers, helper classes, and static utilities that hide business rules or authorization behavior
 - partial classes and code-behind patterns where behavior is split across generated and hand-written files
@@ -131,10 +146,11 @@ Present evidence-based issues with:
 
 11. `Test Coverage Analysis`
 Assess tests located inside or outside the component boundary when relevant.
-Use quantitative coverage only when explicit coverage artifacts exist; otherwise provide a qualitative assessment.
+Use quantitative coverage only when explicit coverage artifacts exist. Otherwise provide a qualitative assessment.
 
 Always use relative paths when referencing files inside the report.
 Include line numbers when citing specific code locations.
+Keep the report descriptive and evidence-driven. Do not add recommendations.
 
 ## Ambiguity Handling
 

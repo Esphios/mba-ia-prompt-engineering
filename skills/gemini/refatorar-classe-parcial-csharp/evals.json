@@ -1,0 +1,29 @@
+{
+  "skill_name": "refatorar-classe-parcial-csharp",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The `AdminController.cs` file is getting too large. Can you refactor it using partial classes?",
+      "expected_output": "The agent should activate the 'refatorar-classe-parcial-csharp' skill, analyze a large controller file such as `src/WebApi/Controllers/AdminController.cs`, and split it into multiple partial class files based on functionality (for example, views and AJAX methods).",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Refactor the `SearchService` class in the Application layer into partial classes. It's becoming unmanageable.",
+      "expected_output": "The agent should activate the 'refatorar-classe-parcial-csharp' skill. It should find and analyze an application service such as `src/Application/Services/SearchService.cs` and propose a refactoring plan to split it into partial classes based on the different aspects of the search functionality it handles.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "There's a huge class file in the `Services` folder, I think it's for users. Can you organize it?",
+      "expected_output": "The agent should interpret 'organize it' in the context of large C# files as a request to refactor. It should identify the likely candidate (for example, `UserService.cs`) and activate the 'refatorar-classe-parcial-csharp' skill to analyze and split it.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Can you split the `CompanyDto.cs` class into partials?",
+      "expected_output": "The agent should activate the 'refatorar-classe-parcial-csharp' skill. It should analyze a simple DTO such as `src/Application/Dtos/CompanyDto.cs`, recognize that it has very few properties, and inform the user that this class is not a good candidate for refactoring into partial classes because there is no significant complexity to separate.",
+      "files": ["src/Application/Dtos/CompanyDto.cs"]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "skill_name": "port-codex-skill",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I have a Codex skill in `/tmp/codex-skill`. Please port it to the Gemini format.",
+      "expected_output": "The agent should activate the 'port-codex-skill' skill and describe the process of analyzing the source folder, translating the SKILL.md, and removing unsupported files.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Port the skill from `/tmp/bad-codex-skill`, but I don't think it has a SKILL.md.",
+      "expected_output": "The agent should activate the 'port-codex-skill' skill. It should report that the source directory is invalid because it's missing the required `SKILL.md` file and explain that it cannot proceed without it.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "How do I convert my old skills?",
+      "expected_output": "The agent should interpret this as a request to use the 'port-codex-skill'. It should activate the skill and then ask the user for the path to the Codex skill directory they want to convert.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Convert the Codex skill located at `C:\\\\skills\\\\old-skill` and place the new Gemini skill in `C:\\\\skills\\\\new-skill`.",
+      "expected_output": "The agent should activate the 'port-codex-skill' skill. It should confirm both the source and destination paths and then describe the steps it will take to perform the conversion from the specified source to the specified destination.",
+      "files": []
+    }
+  ]
+}

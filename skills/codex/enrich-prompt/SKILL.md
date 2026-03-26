@@ -23,7 +23,7 @@ Always start by using `$sanitize-prompt` logic before any enrichment decision. D
    - prompt chaining
    - least-to-most
 4. Use role prompting in every final rewrite. Choose one role that materially improves output quality.
-5. Use Tree of Thought with 3 depths before deciding which principles to apply:
+5. Use Tree of Thought internally with 3 depths before deciding which principles to apply:
    - depth 1: generate materially different principle sets
    - depth 2: refine the strongest sets by fixing gaps, excess cost, and weak structure
    - depth 3: finalize and compare the best refined sets
@@ -36,7 +36,9 @@ Always start by using `$sanitize-prompt` logic before any enrichment decision. D
    - ambiguity resilience: 0.10
    - execution readiness: 0.10
 7. Pick the winning principle set and rewrite the sanitized prompt accordingly.
+Shape the final prompt so it is directly usable and explicit about role, objective, context, constraints, output format, and quality bar.
 8. Prefer the smallest effective set of principles. Do not stack techniques just because they exist.
+9. Preserve placeholders, variables, and domain vocabulary unless they are the source of ambiguity.
 
 ## Principle Selection Rules
 
@@ -91,6 +93,7 @@ Use when the user request is too large or ambiguous to solve well in one shot an
 - Do not assume more examples improve quality.
 - If one stage feeds another, make structure and parsing explicit.
 - Remember that prompt refinement is still necessary because the model can hallucinate or misread the task.
+- Keep the final prompt ready to paste into another system without extra explanation.
 
 ## Output Contract
 
@@ -114,6 +117,7 @@ Optionally add `Missing information` when the quality of the enriched prompt sti
 
 - Never skip sanitization.
 - Never claim that all principles should be used.
+- Do not expose raw chain-of-thought or the full internal scoring table unless the user explicitly asks for that analysis.
 - Do not force chain-of-thought, ReAct, or self-consistency into trivial tasks.
 - If the sanitized prompt is already strong, apply a light-touch enrichment.
 - Preserve the user's domain vocabulary unless it is the source of ambiguity.

@@ -1,0 +1,29 @@
+{
+  "skill_name": "diagrama-sequencia",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a sequence diagram for the `ProcessOrder` method in `OrderController`.",
+      "expected_output": "The agent should activate the 'diagrama-sequencia' skill, trace the calls from `OrderController.ProcessOrder` down to the relevant services (e.g., `PaymentService`, `InventoryService`) and repositories, and generate a Mermaid sequence diagram representing this complete flow.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Generate a sequence diagram for the user authentication process, starting from the `Login` action in the API layer.",
+      "expected_output": "The agent should activate the 'diagrama-sequencia' skill, starting from the auth controller or route. It should trace the login flow through the application and infrastructure layers, likely involving an `AuthService` and `UserRepository`, and generate a detailed Mermaid diagram.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Can you draw me a diagram of how the report generation background job works?",
+      "expected_output": "The agent should interpret this as a request for a sequence diagram. It should identify a likely entry point, such as a cron job or message queue consumer for reports, activate the 'diagrama-sequencia' skill to trace the flow, and generate the diagram.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Create a sequence diagram for the `DataCleanupWorker`.",
+      "expected_output": "The agent should activate the 'diagrama-sequencia' skill, analyze the `DataCleanupWorker` class, trace the calls it makes to other services or databases for background processing, and generate a Mermaid diagram illustrating these automated interactions.",
+      "files": []
+    }
+  ]
+}

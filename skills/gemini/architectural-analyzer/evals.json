@@ -1,0 +1,29 @@
+{
+  "skill_name": "architectural-analyzer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Analyze the architecture of this project and give me an overview.",
+      "expected_output": "The agent should activate the 'architectural-analyzer' skill and produce a structured report detailing the codebase architecture, including layers such as presentation, application, and infrastructure, and how they depend on one another.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Analyze the `WebApi` component and its dependencies. How does it violate clean architecture principles?",
+      "expected_output": "The agent should activate the 'architectural-analyzer' skill. The analysis should focus on the `WebApi` component and correctly identify direct dependencies on lower-level data-access modules as potential Clean Architecture violations.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "What are the main architectural risks in this codebase?",
+      "expected_output": "The agent should activate the 'architectural-analyzer' skill and identify key risks like high coupling, circular dependencies between layers, and resulting difficulties in testing and maintenance.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I need to understand how the different parts of this system fit together. Can you help me?",
+      "expected_output": "The agent should recognize this as an architectural analysis request, activate the 'architectural-analyzer' skill, and generate a high-level overview of the system's structure and dependencies.",
+      "files": []
+    }
+  ]
+}

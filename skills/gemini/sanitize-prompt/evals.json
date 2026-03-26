@@ -1,0 +1,29 @@
+{
+  "skill_name": "sanitize-prompt",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "ok so umm i need to, like, fix the build i think? its giving this error NU1301, yeah, that. can you, uh, can you fix it? fix the build.",
+      "expected_output": "The agent should activate the 'sanitize-prompt' skill and distill the user's request into a clear intent ('Fix the build which is failing with error NU1301') and extract key constraints and information.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I want to analyze the architecture. Give me a report on the project's architecture. Don't analyze the architecture, just tell me about the dependencies.",
+      "expected_output": "The agent should activate the 'sanitize-prompt' skill. It should identify the conflicting instructions and produce a sanitized prompt that prioritizes the most likely goal, or asks for clarification. A good output would be: 'User wants to analyze project dependencies, but also mentioned a full architecture report. Clarification needed: Prioritize dependency analysis or full architectural report?'",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Hey, how's it going today? I was wondering, if you have a moment, maybe you could help me. I need to understand how the login works. My boss is asking me for a diagram. Thanks a bunch!",
+      "expected_output": "The agent should activate the 'sanitize-prompt' skill. It should strip away all the conversational filler and extract the core request: 'Create a sequence diagram for the login process.'",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "I was trying to add a new customer, but when I entered their account identifier, the system crashed. It happened in the `Details` action of the `AdminController`. I think the `customer` object was null or something.",
+      "expected_output": "The agent should activate the 'sanitize-prompt' skill. It should parse the user's story to identify the implicit bug report and formulate a clear, actionable goal: 'Fix a NullReferenceException in the `AdminController`'s `Details` action that occurs when a non-existent customer identifier is provided.'",
+      "files": []
+    }
+  ]
+}

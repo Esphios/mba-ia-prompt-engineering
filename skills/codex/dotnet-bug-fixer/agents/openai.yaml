@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dotnet Bug Fixer"
+  short_description: "Depuracao segura em worktree"
+  default_prompt: "Use $dotnet-bug-fixer para investigar este bug .NET em um worktree isolado e aplicar uma correcao cirurgica."
