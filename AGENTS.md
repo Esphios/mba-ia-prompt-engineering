@@ -1,302 +1,277 @@
 # AGENTS.md
 
-This file provides guidance to AI Agents when working with code in this repository.
+## Visão Geral
 
-## Folder-Specific Setup and Dependencies
+Este repositório reúne exercícios e exemplos da disciplina de Prompt
+Engineering. A raiz funciona como guia de navegação do curso, enquanto alguns
+capítulos têm instruções mais específicas em `AGENTS.md` próprios.
 
-### Chapter 1: Tipos de Prompts
+## Tecnologias Principais
+
+| Categoria            | Tecnologia            | Evidência                                        | Uso                        |
+| -------------------- | --------------------- | ------------------------------------------------ | -------------------------- |
+| Runtime              | Python                | `requirements.txt`                               | scripts e exemplos         |
+| Framework LLM        | LangChain             | `requirements.txt`, capítulos `1`, `5`, `6`, `7` | prompts e workflows        |
+| Observabilidade      | LangSmith, Langfuse   | `requirements.txt`, `7-evaluation/`              | avaliação                  |
+| Output/CLI           | Rich, PyYAML, pytest  | `requirements.txt`                               | terminal, prompts e testes |
+| Materiais auxiliares | `skills/`, `TOSTUDY/` | árvore do repositório                            | conteúdo complementar      |
+
+## Estrutura do Repositório
+
+- `1-tipos-de-prompts/`: técnicas fundamentais de prompting.
+- `3-estrutura-basica-dos-prompts/`: estruturação base de prompts.
+- `4-prompts-e-workflow-de-agentes/`: workflows e agentes.
+- `5-gerenciamento-e-versionamento-de-prompts/`: versionamento e testes de prompts.
+- `6-prompt-enriquecido/`: técnicas de enriquecimento.
+- `7-evaluation/`: evaluation com LangSmith e Langfuse.
+- `skills/`: skills do ecossistema Codex/Gemini usadas como material do curso.
+- `venv/`: ambiente virtual local da raiz; não editar nem versionar conteúdo interno.
+- `.env.example`: template de variáveis de ambiente compartilhadas na raiz.
+
+## Setup da Raiz
+
 ```bash
-cd 1-tipos-de-prompts/
-
-# Setup
 python -m venv venv
-source venv/bin/activate  # macOS/Linux
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-
-# Configure environment
-cp .env.example .env
-# Edit .env and add: OPENAI_API_KEY=...
 ```
 
-**Key Dependencies:**
-- langchain==0.3.27
-- langchain-openai==0.3.32
-- openai==1.102.0
-- rich==14.1.0
-- python-dotenv==1.1.1
+- A raiz possui `requirements.txt` e `.env.example`.
+- Nem todo capítulo usa exatamente as dependências da raiz.
+- Quando existir `requirements.txt` próprio em um capítulo, ele prevalece para aquele escopo.
 
-**Scripts:**
+## Padrões Gerais do Curso
+
+- Trate a raiz como índice do curso; não imponha abstrações compartilhadas sem necessidade.
+- Preserve a numeração das aulas e os nomes dos exemplos.
+- Cada capítulo tende a ser autocontido em setup, `.env` e fluxo de execução.
+- Se um capítulo já tiver `AGENTS.md` próprio, siga o arquivo do capítulo ao trabalhar dentro dele.
+- Não edite `venv/` nem `.pytest_cache/`.
+- Se adicionar variáveis de ambiente, atualize `.env.example` ou o `.env.example` do capítulo correspondente.
+- Materiais e mensagens voltados ao curso devem permanecer em pt-BR.
+
+## Navegação por Capítulo
+
+### Capítulo 1: Tipos de Prompts
+
+Evidência principal: `1-tipos-de-prompts/examples/`, `1-tipos-de-prompts/generic/`, `1-tipos-de-prompts/utils.py`.
+
+Setup observado no material anterior:
+
 ```bash
-python 0-Role-prompting.py          # Role-based prompting
-python 1-zero-shot.py               # Zero-shot prompting
-python 2-one-few-shot.py            # One-shot and few-shot examples
-python 3-CoT.py                     # Chain of Thought
-python 3.1-CoT-Self-consistency.py  # CoT with self-consistency
-python 4-ToT.py                     # Tree of Thoughts
-python 5-SoT.py                     # Skeleton of Thought
-python 6-ReAct.py                   # ReAct framework
-python 7-Prompt-channing.py         # Prompt chaining (generates output file)
-python 8-Least-to-most.py           # Least-to-most decomposition
-```
-
-### Chapter 4: Prompts e Workflow de Agentes
-```bash
-cd 4-prompts-e-workflow-de-agentes/
-
-# No specific requirements.txt - uses root dependencies
-# Structure:
-#   agents/    - Agent implementations for architectural analysis
-#   commands/  - Command implementations for agent orchestration
-```
-
-### Chapter 5: Gerenciamento e Versionamento de Prompts
-```bash
-cd 5-gerenciamento-e-versionamento-de-prompts/
-
-# Setup
+cd .\1-tipos-de-prompts\
 python -m venv venv
-source venv/bin/activate
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-
-# Configure environment
-cp .env.example .env
+Copy-Item .env.example .env
 ```
 
-**Environment Variables:**
-```bash
-# Required
-OPENAI_API_KEY=sk-your-api-key-here
+Dependências relevantes já documentadas anteriormente:
 
-# Optional (for LangSmith integration)
+- `langchain==0.3.27`
+- `langchain-openai==0.3.32`
+- `openai==1.102.0`
+- `rich==14.1.0`
+- `python-dotenv==1.1.1`
+
+Exemplos importantes:
+
+```bash
+python .\examples\0-Role-prompting.py
+python .\examples\1-zero-shot.py
+python .\examples\2-one-few-shot.py
+python .\examples\3-CoT.py
+python .\examples\3.1-CoT-Self-consistency.py
+python .\examples\4-ToT.py
+python .\examples\5-SoT.py
+python .\examples\6-ReAct.py
+python .\examples\7-Prompt-channing.py
+python .\examples\8-Least-to-most.py
+```
+
+Notas úteis:
+
+- `utils.py` é o utilitário compartilhado de saída formatada com Rich.
+- O capítulo contém variantes `examples/` e `generic/`; não assuma que só uma delas é a fonte de verdade sem verificar o contexto da tarefa.
+- `7-Prompt-channing.py` gera `prompt_chaining_result.md`.
+
+### Capítulo 4: Prompts e Workflow de Agentes
+
+Evidência principal: `4-prompts-e-workflow-de-agentes/agents/`, `4-prompts-e-workflow-de-agentes/commands/`, `4-prompts-e-workflow-de-agentes/AGENTS.md`.
+
+Características observadas:
+
+- Não há entrypoint Python única observada na raiz do capítulo.
+- A pasta funciona como material de referência, prompts e templates de workflows.
+- `agents/` contém agentes especializados para análise de código.
+- `commands/` contém comandos de orquestração.
+
+Ao trabalhar nesse capítulo:
+
+- Leia primeiro o `AGENTS.md` local.
+- Preserve a separação entre agentes e comandos.
+- Não invente um fluxo executável único se a pasta estiver sendo usada como referência textual.
+
+### Capítulo 5: Gerenciamento e Versionamento de Prompts
+
+Setup já documentado anteriormente:
+
+```bash
+cd .\5-gerenciamento-e-versionamento-de-prompts\
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+Copy-Item .env.example .env
+```
+
+Variáveis de ambiente úteis já registradas:
+
+```env
+OPENAI_API_KEY=
 LANGCHAIN_TRACING_V2=false
 LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
 LANGCHAIN_API_KEY=your-langsmith-key-here
 LANGCHAIN_PROJECT=prompt-management-system
 ```
 
-**Key Dependencies (updated versions):**
-- langchain==1.0.0a5
-- langchain-core==0.3.76
-- langchain-openai==0.3.33
-- langgraph==0.6.7
-- langgraph-prebuilt==0.6.4
-- langsmith==0.4.29
-- pytest==8.3.4
-- Jinja2==3.1.6
+Dependências relevantes preservadas da versão anterior:
 
-**Commands:**
+- `langchain==1.0.0a5`
+- `langchain-core==0.3.76`
+- `langchain-openai==0.3.33`
+- `langgraph==0.6.7`
+- `langgraph-prebuilt==0.6.4`
+- `langsmith==0.4.29`
+- `pytest==8.3.4`
+- `Jinja2==3.1.6`
+
+Comandos úteis:
+
 ```bash
-# Run agents
-python src/agent_code_reviewer.py
-python src/agent_pull_request.py
-
-# Run tests
-pytest tests/test_prompts.py -v
-pytest tests/ -v  # All tests
+python .\src\agent_code_reviewer.py
+python .\src\agent_pull_request.py
+pytest .\tests\test_prompts.py -v
+pytest .\tests\ -v
+pytest -k "test_name" -v
 ```
 
-### Chapter 6: Prompt Enriquecido
-```bash
-cd 6-prompt-enriquecido/
+Estrutura importante:
 
-# Setup
+- `src/`: agentes para code review e criação de PRs.
+- `tests/`: validação de prompts baseada em pytest.
+- `prompts/`: armazenamento versionado de prompts e artefatos YAML/JSON.
+
+### Capítulo 6: Prompt Enriquecido
+
+Setup já documentado anteriormente:
+
+```bash
+cd .\6-prompt-enriquecido\
 python -m venv venv
-source venv/bin/activate
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-
-# Configure environment
-cp .env.example .env
-# Edit .env and add: OPENAI_API_KEY=KEY
+Copy-Item .env.example .env
 ```
 
-**Key Dependencies (same as Chapter 5):**
-- langchain==1.0.0a5
-- langchain-core==0.3.76
-- langchain-openai==0.3.33
-- langgraph==0.6.7
-- langsmith==0.4.29
-- openai==1.108.0
-- pytest==8.3.4
+Dependências relevantes preservadas:
 
-**Scripts:**
+- `langchain==1.0.0a5`
+- `langchain-core==0.3.76`
+- `langchain-openai==0.3.33`
+- `langgraph==0.6.7`
+- `langsmith==0.4.29`
+- `openai==1.108.0`
+- `pytest==8.3.4`
+
+Scripts observados:
+
 ```bash
-python 0-No-expansion.py          # Basic prompting without expansion
-python 1-ITER_RETGEN.py           # Iterative retrieval generation
-python 2-query-enrichment.py      # Query enrichment techniques
+python .\0-No-expansion.py
+python .\1-ITER_RETGEN.py
+python .\2-query-enrichment.py
 ```
 
-**Additional Resource:**
-- `repo_langchain_1.0/`: Contains LangChain reference implementation for testing
+Notas úteis:
 
-### Chapter 7: Evaluation
+- O capítulo foca em expansão de consulta e enriquecimento contextual.
+- A versão anterior também mencionava `repo_langchain_1.0/` como recurso adicional; trate isso como material auxiliar quando presente no capítulo ou em documentação relacionada.
+
+### Capítulo 7: Evaluation
+
+Setup já documentado anteriormente:
+
 ```bash
-cd 7-evaluation/
-
-# Setup
+cd .\7-evaluation\
 python -m venv venv
-source venv/bin/activate
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-
-# Configure environment
-cp .env.example .env
-# Edit .env and add keys
+Copy-Item .env.example .env
 ```
 
-**Environment Variables:**
-```bash
-# LangSmith (examples 1-4)
-LANGSMITH_API_KEY=your-api-key
+Variáveis de ambiente úteis já registradas:
+
+```env
+LANGSMITH_API_KEY=
 LANGCHAIN_TRACING_V2=true
-
-# OpenAI (all examples)
-OPENAI_API_KEY=your-api-key
-
-# Optional: Model configuration
+OPENAI_API_KEY=
 LLM_MODEL=gpt-4o-mini
 LLM_TEMPERATURE=0
-
-# Langfuse (example 5 - optional)
-LANGFUSE_SECRET_KEY=sk-lf-...
-LANGFUSE_PUBLIC_KEY=pk-lf-...
+LANGFUSE_SECRET_KEY=
+LANGFUSE_PUBLIC_KEY=
 LANGFUSE_HOST=http://localhost:3000
 ```
 
-**Key Dependencies:**
-- langchain==0.3.27
-- langchain-openai==0.3.34
-- langsmith==0.4.32
-- langfuse==3.6.1
-- openevals==0.1.0
+Dependências relevantes preservadas:
 
-**Shared Utilities Architecture:**
-- `shared/clients.py` - LLM and observability clients (OpenAI, LangSmith, Langfuse)
-- `shared/prompts.py` - YAML prompt loading and execution utilities
-- `shared/datasets.py` - Dataset upload with metadata support
-- `shared/evaluators.py` - Helper functions for prepare_data
-- `shared/parsers.py` - JSON parsing with markdown removal
+- `langchain==0.3.27`
+- `langchain-openai==0.3.34`
+- `langsmith==0.4.32`
+- `langfuse==3.6.1`
+- `openevals==0.1.0`
 
-**Examples Structure:**
+Arquitetura utilitária já documentada:
+
+- `shared/clients.py`: clientes LLM e observabilidade.
+- `shared/prompts.py`: carregamento e execução de prompts YAML.
+- `shared/datasets.py`: upload de datasets com metadata.
+- `shared/evaluators.py`: helpers para `prepare_data`.
+- `shared/parsers.py`: parsing de JSON com remoção de markdown.
+
+Fluxos úteis:
+
 ```bash
-# 1-basic/ - Basic evaluators
-python 1-basic/1-format-eval.py
+python .\1-basic\1-format-eval.py
+python .\2-precision\1-conservative-high-precision.py
 
-# 2-precision/ - Classification metrics (P/R/F1)
-python 2-precision/1-conservative-high-precision.py
+cd .\3-pairwise
+python .\upload_dataset.py
+python .\create_prompts.py
+python .\run.py
 
-# 3-pairwise/ - Pairwise comparison
-cd 3-pairwise
-python upload_dataset.py  # first time only
-python create_prompts.py  # first time only
-python run.py
+cd ..\4-pairwise-doc
+python .\upload_dataset.py
+python .\create_prompt.py
+python .\run.py
 
-# 4-pairwise-doc/ - Pairwise with individual metrics
-cd 4-pairwise-doc
-python upload_dataset.py
-python create_prompt.py
-python run.py
-
-# 5-langfuse/ - Langfuse (open-source alternative)
-cd 5-langfuse
-python upload_dataset.py
-python create_prompts.py
-python run.py
+cd ..\5-langfuse
+python .\upload_dataset.py
+python .\create_prompts.py
+python .\run.py
 ```
 
-## Project Architecture
+## Diferenças Importantes Entre Capítulos
 
-### Core Structure
-- **1-tipos-de-prompts/**: Técnicas fundamentais de prompt engineering
-  - 9 scripts demonstrando várias estratégias de prompting
-  - `utils.py`: Utilitário compartilhado para saída formatada com Rich
-  - Próprio `requirements.txt` e configuração `.env`
+- Capítulos `1` e `7`: baseados em LangChain `0.3.x`, mais próximos de exemplos introdutórios e evaluation.
+- Capítulos `5` e `6`: usam stack mais nova com LangGraph e fluxo mais orientado a engenharia de prompts.
+- Capítulo `4`: material de workflow e orquestração, com peso maior em arquivos de referência do que em scripts únicos de execução.
 
-- **4-prompts-e-workflow-de-agentes/**: Implementações de workflows baseados em agentes
-  - `agents/`: Agentes especializados para análise de código
-  - `commands/`: Camada de comando para coordenação de agentes
-  - Usa dependências do projeto raiz
+## Arquivos e Saídas Relevantes
 
-- **5-gerenciamento-e-versionamento-de-prompts/**: Gerenciamento avançado de prompts
-  - `src/`: Implementações de agentes para code review e criação de PRs
-  - `tests/`: Validação de prompts baseada em pytest
-  - `prompts/`: Armazenamento versionado de prompts com sistema de registry
-  - Suporta gerenciamento local e remoto via LangSmith
-  - Próprio `requirements.txt` com versões mais recentes de LangChain e LangGraph
+- Capítulo 1: `prompt_chaining_result.md` pode ser gerado por `7-Prompt-channing.py`.
+- Capítulo 5: artefatos `.json` e `.yaml` em `prompts/` são parte do fluxo de versionamento.
 
-- **6-prompt-enriquecido/**: Técnicas avançadas de enriquecimento de prompts
-  - Exemplos de expansão e enriquecimento de queries
-  - Implementação ITER-RETGEN (Iterative Retrieval Generation)
-  - Usa mesmas dependências do Capítulo 5
-  - Inclui repositório LangChain para referência
+## Peculiaridades do Projeto
 
-- **7-evaluation/**: Avaliação sistemática de prompts e LLMs
-  - 5 exemplos progressivos de evaluation
-  - Métricas básicas, precision/recall/F1, comparação pairwise
-  - Integração com LangSmith e Langfuse
-  - Datasets para code review e documentação
-  - Próprio `requirements.txt` e configuração `.env`
-
-### Padrões Comuns Entre Todas as Pastas
-
-**IMPORTANTE: Cada pasta é auto-contida**, possuindo:
-- Próprio ambiente virtual (`venv/`)
-- Próprio arquivo de dependências (`requirements.txt`)
-- Própria configuração de variáveis de ambiente (`.env`)
-
-Padrões compartilhados:
-- Todas usam `python-dotenv` para configuração de ambiente
-- LangChain como framework principal de interação com LLMs
-- Rich library para saída formatada no terminal (Capítulo 1)
-- Flexibilidade de modelos com alternativas comentadas
-- Tratamento de erros consistente com mensagens descritivas
-
-### Diferenças de Versões Entre Pastas
-
-**Capítulos 1 e 7 (exemplos básicos e evaluation):**
-- Usa LangChain 0.3.27 estável
-- Dependências básicas para demonstrações de prompt engineering
-
-**Capítulos 5 e 6 (recursos avançados):**
-- Usa LangChain 1.0.0a5 (versão alpha)
-- Inclui LangGraph para workflows baseados em grafos
-- Adiciona Jinja2 para processamento de templates
-- Inclui pytest para testes
-
-## Comandos de Teste
-```bash
-# Capítulos 5 e 6 (com pytest)
-cd 5-gerenciamento-e-versionamento-de-prompts/
-pytest tests/ -v                    # Todos os testes
-pytest tests/test_prompts.py -v     # Arquivo de teste específico
-pytest -k "test_name" -v            # Teste por padrão de nome
-```
-
-## Arquivos de Saída
-- **Capítulo 1:** `prompt_chaining_result.md` - Gerado por 7-Prompt-channing.py
-- **Capítulo 5:** Vários arquivos `.json` e `.yaml` para versionamento de prompts no diretório `prompts/`
-
-## Início Rápido para Cada Capítulo
-```bash
-# Capítulo 1 - Prompt Engineering Básico
-cd 1-tipos-de-prompts && python -m venv venv && source venv/bin/activate
-pip install -r requirements.txt && cp .env.example .env
-# Adicionar OPENAI_API_KEY ao .env
-python 1-zero-shot.py
-
-# Capítulo 5 - Gerenciamento de Prompts
-cd 5-gerenciamento-e-versionamento-de-prompts && python -m venv venv && source venv/bin/activate
-pip install -r requirements.txt && cp .env.example .env
-# Adicionar OPENAI_API_KEY e opcionalmente chaves LangSmith ao .env
-python src/agent_code_reviewer.py
-
-# Capítulo 6 - Prompts Enriquecidos
-cd 6-prompt-enriquecido && python -m venv venv && source venv/bin/activate
-pip install -r requirements.txt && cp .env.example .env
-# Adicionar OPENAI_API_KEY ao .env
-python 2-query-enrichment.py
-
-# Capítulo 7 - Evaluation
-cd 7-evaluation && python -m venv venv && source venv/bin/activate
-pip install -r requirements.txt && cp .env.example .env
-# Adicionar OPENAI_API_KEY e LANGSMITH_API_KEY ao .env
-python 1-basic/1-format-eval.py
-```
+- O repositório tem formato de curso e evolui por capítulos, não por uma aplicação única.
+- Há mistura de conteúdo didático, workflows de agentes e skills exportadas.
+- O histórico recente mostra evolução contínua do material, com capítulos novos e reestruturações.
