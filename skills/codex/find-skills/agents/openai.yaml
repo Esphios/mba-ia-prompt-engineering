@@ -1,0 +1,4 @@
+interface:
+  display_name: "Find Skills"
+  short_description: "Discover installable skills for a user need"
+  default_prompt: "Use $find-skills to identify relevant installable skills for this task."

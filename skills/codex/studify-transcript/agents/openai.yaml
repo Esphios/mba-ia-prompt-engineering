@@ -1,0 +1,4 @@
+interface:
+  display_name: "Studify Transcript"
+  short_description: "Organize lecture transcripts for study"
+  default_prompt: "Use $studify-transcript to turn this class transcript into study-ready Markdown."

@@ -1,0 +1,29 @@
+{
+  "skill_name": "studify-transcript",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Turn this messy lecture transcript into study notes with headings, definitions, and examples, but keep the original meaning.",
+      "expected_output": "The agent should activate the 'studify-transcript' skill and reorganize the transcript into study-ready Markdown with clearer sections, preserved meaning, and improved readability.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I have OCR text from class notes with repeated fragments. Please clean it up and make it useful for revision.",
+      "expected_output": "The agent should activate the 'studify-transcript' skill and selectively deduplicate the OCR-derived notes, preserve relevant content, and produce a cleaner Markdown structure optimized for revision.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Convert these lecture notes into a study guide. Use a table if it helps compare concepts and flag any parts that seem ambiguous.",
+      "expected_output": "The agent should activate the 'studify-transcript' skill and produce a study guide that may include a comparison table and explicit uncertainty markers for ambiguous or incomplete passages.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "These are rough classroom notes about the stages of mitosis. Rework them into Markdown and add a diagram only if it really helps.",
+      "expected_output": "The agent should activate the 'studify-transcript' skill, improve the structure and readability of the notes, and add a Mermaid diagram only if it materially improves understanding of the process.",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brainstorm ToT"
+  short_description: "Explore options with scored Tree of Thought"
+  default_prompt: "Use $brainstorm-tot to sanitize this problem, explore multiple solution paths, and select the best one with Tree of Thought."

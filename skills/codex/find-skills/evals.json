@@ -1,0 +1,29 @@
+{
+  "skill_name": "find-skills",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Is there a skill that can help me audit dependencies and identify outdated or risky libraries?",
+      "expected_output": "The agent should activate the 'find-skills' skill and recommend a relevant installable skill, such as a dependency-auditing skill, explaining why it matches the user's need and how to install or use it.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "How do I find a skill for generating diagrams from code flows?",
+      "expected_output": "The agent should activate the 'find-skills' skill and help the user search for an appropriate skill, ideally identifying sequence-diagram or flow-analysis capabilities and giving a concrete next step to install or invoke one.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I wish this agent had something specialized for improving prompts before they are sent to the model.",
+      "expected_output": "The agent should activate the 'find-skills' skill and identify prompt-related skills that fit the request, such as sanitization or enrichment skills, instead of answering only with generic advice.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Can you help me discover whether there is a skill for writing repo-level instruction files like AGENTS.md?",
+      "expected_output": "The agent should activate the 'find-skills' skill and point the user to a matching skill for repository instruction files, including a brief explanation of fit and how to add or use it.",
+      "files": []
+    }
+  ]
+}

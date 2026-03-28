@@ -1,0 +1,29 @@
+{
+  "skill_name": "brainstorm-tot",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Brainstorm at least three ways to reduce flaky integration tests, compare them with Tree of Thought, and tell me which path to take first.",
+      "expected_output": "The agent should activate the 'brainstorm-tot' skill, sanitize the problem first, produce at least three materially different paths with compact skeletons, run a bounded Tree of Thought comparison, and return a winner plus alternatives and assumptions.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I need options for redesigning this prompt workflow. Use depth 5 and keep earlier winning branches if they still beat deeper ones.",
+      "expected_output": "The agent should activate the 'brainstorm-tot' skill, honor the custom depth of 5, keep previous-depth winners valid, and return the best current branch along with any earlier-depth fallback that still scores better or remains more defensible.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "The problem is messy and ambiguous. Clean it up first, enrich it if needed, then brainstorm paths and pick the best one.",
+      "expected_output": "The agent should activate the 'brainstorm-tot' skill, explicitly sanitize the raw problem first, apply enrichment only if it improves the exploration, and then continue with multi-path branching, skeletons, ToT comparison, and final selection.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Give me multiple approaches for this architecture migration, but if one branch is clearly better after depth 2, don't over-explore just to reach depth 3.",
+      "expected_output": "The agent should activate the 'brainstorm-tot' skill, explore multiple paths, use bounded Tree of Thought, and stop deepening if additional exploration adds no meaningful differentiation, while still presenting the strongest alternatives and assumptions.",
+      "files": []
+    }
+  ]
+}

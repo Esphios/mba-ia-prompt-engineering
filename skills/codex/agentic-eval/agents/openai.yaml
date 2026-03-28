@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Eval"
+  short_description: "Patterns for evaluating and refining agent outputs"
+  default_prompt: "Use $agentic-eval to design or improve an evaluator-refiner loop for this task."

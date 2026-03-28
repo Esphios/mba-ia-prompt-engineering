@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create AGENTS.md"
+  short_description: "Generate or improve repository instruction files"
+  default_prompt: "Use $create-agentsmd to create or improve the repository instruction file for this project."
