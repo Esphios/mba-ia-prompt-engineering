@@ -8,6 +8,14 @@ description: Analisa um metodo ou fluxo para mapear callers e callees, rastrear 
 Use este skill para rastrear um metodo, caso de uso ou fluxo de negocio e gerar documentacao Mermaid precisa e reutilizavel.
 Nao gere o diagrama imediatamente. Primeiro reconstrua o fluxo real a partir do codigo, configuracao e documentacao.
 
+## Imported Metadata
+
+Preserve the following source metadata as reference only. Gemini does not consume it as native config.
+
+- `Display name`: `Diagrama de Sequencia`
+- `Short description`: `Rastreia fluxos e gera Mermaid`
+- `Suggested prompt`: `Use $diagrama-sequencia para rastrear este metodo ou fluxo e gerar um diagrama de sequencia Mermaid detalhado.`
+
 ## Quando Usar
 
 - Entender o caminho completo de execucao de um metodo.

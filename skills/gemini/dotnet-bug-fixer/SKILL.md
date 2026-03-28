@@ -8,6 +8,14 @@ description: Skill de depuracao .NET especializado em isolamento com git worktre
 Use este skill quando o usuario pedir investigacao e correcao de um bug em um repositorio .NET.
 O objetivo e diagnosticar a causa provavel com base em evidencias do codigo, aplicar a menor correcao segura possivel em um worktree isolado e explicar riscos e validacao.
 
+## Imported Metadata
+
+Preserve the following source metadata as reference only. Gemini does not consume it as native config.
+
+- `Display name`: `Dotnet Bug Fixer`
+- `Short description`: `Depuracao segura em worktree`
+- `Suggested prompt`: `Use $dotnet-bug-fixer para investigar este bug .NET em um worktree isolado e aplicar uma correcao cirurgica.`
+
 ## Quando Usar
 
 - Bugs funcionais em .NET Framework, ASP.NET MVC ou Web API, Web Forms, WCF ou .NET moderno.

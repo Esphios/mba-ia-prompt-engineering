@@ -1,0 +1,29 @@
+{
+  "skill_name": "create-agentsmd",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create an AGENTS.md for this repository so coding agents understand the stack, setup, structure, and constraints.",
+      "expected_output": "The agent should activate the 'create-agentsmd' skill, inspect the repository, and generate or improve an `AGENTS.md` at the project root with accurate setup, structure, conventions, and workflow guidance for coding agents.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Generate a CLAUDE.md for the `frontend/` package only, with instructions specific to that subproject.",
+      "expected_output": "The agent should activate the 'create-agentsmd' skill, target the `frontend/` scope instead of the repository root, and create a repository-instruction document named `CLAUDE.md` with guidance tailored to that package.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Rewrite our existing AGENTS.md in Portuguese and English with clearer rules for tests, environment variables, and folder ownership.",
+      "expected_output": "The agent should activate the 'create-agentsmd' skill and produce a higher-quality bilingual repository instruction file that preserves repository-specific truth while improving coverage for tests, environment variables, and ownership boundaries.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "This monorepo has an API, a worker, and a docs site. I want agent instructions that explain the shared rules and the package-specific differences.",
+      "expected_output": "The agent should activate the 'create-agentsmd' skill and decide whether nested instruction files are useful, producing a root-level repository guide plus scoped guidance where necessary for the monorepo packages.",
+      "files": []
+    }
+  ]
+}

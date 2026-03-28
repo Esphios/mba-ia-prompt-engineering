@@ -8,6 +8,14 @@ description: Perform deep technical analysis of a software component and produce
 Use this skill to inspect a specific component or service boundary and produce a deep, evidence-based analysis report.
 Stay in analysis mode: do not refactor, do not propose implementation changes, and do not modify project source files except when saving the final report requested by the task.
 
+## Imported Metadata
+
+Preserve the following source metadata as reference only. Gemini does not consume it as native config.
+
+- `Display name`: `Component Deep Analyzer`
+- `Short description`: `Deep component behavior analysis`
+- `Suggested prompt`: `Use $component-deep-analyzer to inspect this component and produce a structured deep analysis report.`
+
 ## When To Use
 
 - Explain how a service, module, package, or bounded component actually works.

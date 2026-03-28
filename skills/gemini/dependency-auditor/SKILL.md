@@ -8,6 +8,14 @@ description: Audit a project's dependencies and produce a structured report cove
 Use this skill to inspect dependency manifests and produce an evidence-based dependency audit report.
 Stay in analysis mode: do not upgrade packages, do not prescribe migrations, and do not modify project source files except when saving the final report requested by the task.
 
+## Imported Metadata
+
+Preserve the following source metadata as reference only. Gemini does not consume it as native config.
+
+- `Display name`: `Dependency Auditor`
+- `Short description`: `Dependency health and risk audit`
+- `Suggested prompt`: `Use $dependency-auditor to inspect this project's dependencies and produce a structured evidence-based dependency audit report.`
+
 ## When To Use
 
 - Assess dependency health before release, modernization, or security review.

@@ -1,0 +1,29 @@
+{
+  "skill_name": "port-codex-skill-to-gemini",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Convert the Codex skill at `/tmp/codex-skill` into a Gemini skill and give me a clear conversion report.",
+      "expected_output": "The agent should activate the 'port-codex-skill-to-gemini' skill, convert the skill toward a Gemini-compatible target, and explicitly report the source path, target path, copied files, excluded files, and any lossy conversions.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Port this Codex skill to `~/.gemini/skills/my-skill` and tell me what metadata could not be carried over from `agents/openai.yaml`.",
+      "expected_output": "The agent should activate the 'port-codex-skill-to-gemini' skill, target the Gemini directory, inspect `agents/openai.yaml`, and call out which Codex-specific metadata was excluded or summarized during conversion.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I need a Gemini-oriented conversion with an explicit audit of what changed, not just a copied folder.",
+      "expected_output": "The agent should interpret this as a request for the report-oriented 'port-codex-skill-to-gemini' variant rather than the lighter 'port-codex-skill' path, and it should produce a change-focused conversion summary.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Convert `/tmp/bad-skill` to Gemini, but the source may be missing `SKILL.md`. Please report any blockers clearly.",
+      "expected_output": "The agent should activate the 'port-codex-skill-to-gemini' skill and, if the source is invalid, clearly report the blocking issue, explain that the missing `SKILL.md` prevents a meaningful conversion, and avoid pretending the conversion succeeded.",
+      "files": []
+    }
+  ]
+}

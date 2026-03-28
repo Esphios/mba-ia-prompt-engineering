@@ -8,6 +8,14 @@ description: Analyze the architecture of a codebase and produce a structured rep
 Use this skill to inspect a codebase and produce a comprehensive, evidence-based architectural analysis report.
 Stay in analysis mode: do not refactor, do not propose implementation changes, and do not modify project source files except when saving the final report requested by the task.
 
+## Imported Metadata
+
+Preserve the following source metadata as reference only. Gemini does not consume it as native config.
+
+- `Display name`: `Architectural Analyzer`
+- `Short description`: `Evidence-based architecture analysis`
+- `Suggested prompt`: `Use $architectural-analyzer to inspect this codebase and produce a structured evidence-based architectural analysis report.`
+
 ## When To Use
 
 - Understand the system shape before refactoring or modernization.

@@ -8,6 +8,14 @@ description: Especialista em refatoracao de classes C#. Use este skill quando o 
 Use este skill para dividir uma classe C# grande em arquivos `partial` mais coesos sem alterar a logica.
 O foco e organizacao, legibilidade e manutencao. O comportamento deve continuar o mesmo.
 
+## Imported Metadata
+
+Preserve the following source metadata as reference only. Gemini does not consume it as native config.
+
+- `Display name`: `Refatorar Classe Parcial CSharp`
+- `Short description`: `Divide classes C# em partials`
+- `Suggested prompt`: `Use $refatorar-classe-parcial-csharp para dividir esta classe C# grande em arquivos parciais sem alterar a logica.`
+
 ## Quando Usar
 
 - Quando uma classe C# cresceu demais e concentra responsabilidades demais.
