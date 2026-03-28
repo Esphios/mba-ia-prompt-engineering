@@ -1,6 +1,6 @@
 ---
 name: port-codex-skill
-description: Convert a Codex skill folder into a Gemini-compatible skill folder by preserving shared SKILL.md content, translating Codex-specific metadata when possible, and removing unsupported Codex-only files.
+description: Convert a Codex skill folder into a Gemini-compatible skill folder with a light-touch, folder-level port that preserves shared SKILL.md content, keeps useful support files, and removes unsupported Codex-only metadata. Use when Codex needs a straightforward Codex-to-Gemini conversion without an extended conversion report.
 ---
 
 # Port Codex Skill
@@ -8,6 +8,11 @@ description: Convert a Codex skill folder into a Gemini-compatible skill folder 
 Use this skill when the user wants to convert a Codex skill into a Gemini-compatible skill folder.
 
 The goal is not just to copy files. The result should preserve the original skill's intent, exclude Codex-only runtime metadata, and leave the generated Gemini `SKILL.md` cleaner and more execution-ready than the source.
+
+## When To Prefer This Skill
+
+Prefer this skill for the lightweight or default conversion path.
+If the user specifically wants a more explicit conversion report or stronger callouts about lossy metadata handling, prefer `$port-codex-skill-to-gemini`.
 
 ## Inputs
 

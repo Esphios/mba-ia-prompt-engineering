@@ -30,6 +30,34 @@ Generate → Evaluate → Critique → Refine → Output
 - **Tasks with clear evaluation criteria**: Defined success metrics exist
 - **Content requiring specific standards**: Style guides, compliance, formatting
 
+## Workflow
+
+1. Sanitize the evaluation task first.
+Clarify what is being judged: final answer, summary, code artifact, tests, report, or another deliverable.
+
+2. Choose the evaluation pattern that fits the task.
+- basic reflection for lightweight self-critique
+- evaluator-optimizer for explicit generation and judging roles
+- code-specific reflection for test-driven refinement
+- rubric-based judging when weighted criteria matter
+
+3. Define the evaluation surface.
+Make the criteria explicit before looping.
+Prefer dimensions that are observable and auditable.
+
+4. Set bounded loop controls.
+Define:
+- max iterations
+- good-enough threshold
+- convergence rule
+- stop condition when quality stops improving
+
+5. Run the loop.
+Generate, evaluate, critique, and refine until the threshold is met or the loop stops improving.
+
+6. Return a decision-ready result.
+Return the selected pattern, criteria, stopping policy, and the recommended loop shape.
+
 ---
 
 ## Pattern 1: Basic Reflection
@@ -187,3 +215,26 @@ def evaluate_with_rubric(output: str, rubric: dict) -> float:
 - [ ] Log all iterations for debugging
 - [ ] Handle evaluation parse failures gracefully
 ```
+
+## Output Contract
+
+Return:
+
+1. `Chosen pattern`
+2. `Why this pattern`
+3. `Evaluation surface`
+4. `Criteria or rubric`
+5. `Iteration policy`
+6. `Stopping rule`
+7. `Main risks or failure modes`
+8. `Recommended loop`
+   - concise implementation shape or pseudocode
+
+## Guardrails
+
+- Do not start an evaluation loop without explicit criteria.
+- Do not run unbounded refinement.
+- Do not confuse critique verbosity with evaluation quality.
+- Do not expose hidden raw chain-of-thought when a summary is enough.
+- Do not use heavy evaluator-optimizer loops for trivial tasks.
+- If a simple rubric or one-pass review is enough, say so.

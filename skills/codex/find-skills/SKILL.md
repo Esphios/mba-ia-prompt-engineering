@@ -123,6 +123,21 @@ When searching, consider these common categories:
 2. **Try alternative terms**: If "deploy" doesn't work, try "deployment" or "ci-cd"
 3. **Check popular sources**: Many skills come from `vercel-labs/agent-skills` or `ComposioHQ/awesome-claude-skills`
 
+## Output Contract
+
+Return:
+
+1. `Recommended skills`
+   - name, source, and what each one does
+2. `Why they fit`
+3. `Verification notes`
+   - install count, source reputation, and confidence caveats
+4. `Install command`
+5. `Learn more`
+   - direct skills.sh or source link when available
+6. `Fallback`
+   - if no good match exists, say so and offer the next-best path
+
 ## When No Skills Are Found
 
 If no relevant skills exist:
@@ -140,3 +155,11 @@ I can still help you with this task directly! Would you like me to proceed?
 If this is something you do often, you could create your own skill:
 npx skills init my-xyz-skill
 ```
+
+## Guardrails
+
+- Do not recommend a skill based only on its title.
+- Do not present unverified search results as trusted recommendations.
+- Prefer higher-signal skills with evidence of usage or reputable sources.
+- If no strong match exists, say that explicitly instead of forcing a weak recommendation.
+- Distinguish clearly between a direct match, a partial match, and a related variant.
