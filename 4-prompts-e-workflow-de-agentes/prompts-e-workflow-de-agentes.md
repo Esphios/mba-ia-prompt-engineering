@@ -6,7 +6,7 @@ Este material mostra como estruturar prompts para agentes de IA de forma mais pr
 
 Este arquivo tem finalidade didática. Ele organiza os conceitos do capítulo para estudo, revisão e entendimento da lógica do workflow.
 Para instruções operacionais e regras de execução dos agentes desta pasta, consulte `AGENTS.md`.
-Para contexto histórico, memória editorial e observações complementares de workflow preservadas do `AGENTS.md` anterior, consulte `workflow-e-historico.md`.
+Para contexto histórico, memória editorial e observações complementares de workflow preservadas da documentação anterior, consulte `history.md`.
 
 A ideia central é simples: não existe um prompt universal, mas existe uma forma melhor de organizar instruções para que o agente entenda com clareza:
 
@@ -34,7 +34,7 @@ Use `AGENTS.md` para:
 - Verificar restrições, fases e disciplina de outputs
 - Saber qual arquivo deve ser seguido na prática por um coordenador de agentes
 
-Use `workflow-e-historico.md` para:
+Use `history.md` para:
 
 - Consultar contexto histórico do capítulo
 - Rever formulações anteriores do workflow
@@ -44,15 +44,15 @@ Use `workflow-e-historico.md` para:
 
 Esta pasta não contém apenas a transcrição reorganizada. Ela também inclui os artefatos práticos citados ao longo do material, que ajudam a conectar a explicação conceitual com exemplos reais de especificação:
 
-| Artefato | Papel no capítulo |
-| --- | --- |
-| `AGENTS.md` | Contrato operacional da pasta para execução do workflow |
-| `workflow-e-historico.md` | Registro histórico e contexto complementar do workflow |
-| `agents/dependency-auditor.md` | Exemplo completo de agente especialista para auditoria de dependências |
-| `agents/architectural-analyzer.md` | Exemplo de agente para análise arquitetural de alto nível |
-| `agents/component-deep-analyzer.md` | Exemplo de agente para análise profunda de componentes individuais |
-| `agents/orchestrator.md` | Especificação do agente orquestrador responsável por `MANIFEST.md` |
-| `commands/run-project-state-full-report.md` | Comando que encadeia as fases e operacionaliza o workflow multiagente |
+| Artefato                                    | Papel no capítulo                                                      |
+| ------------------------------------------- | ---------------------------------------------------------------------- |
+| `AGENTS.md`                                 | Contrato operacional da pasta para execução do workflow                |
+| `history.md`                                | Registro histórico e contexto complementar do workflow                 |
+| `agents/dependency-auditor.md`              | Exemplo completo de agente especialista para auditoria de dependências |
+| `agents/architectural-analyzer.md`          | Exemplo de agente para análise arquitetural de alto nível              |
+| `agents/component-deep-analyzer.md`         | Exemplo de agente para análise profunda de componentes individuais     |
+| `agents/orchestrator.md`                    | Especificação do agente orquestrador responsável por `MANIFEST.md`     |
+| `commands/run-project-state-full-report.md` | Comando que encadeia as fases e operacionaliza o workflow multiagente  |
 
 Na prática, estes arquivos materializam os exemplos mencionados no conteúdo:
 
@@ -60,23 +60,23 @@ Na prática, estes arquivos materializam os exemplos mencionados no conteúdo:
 - A análise de arquitetura e a análise por componente aparecem como agentes separados, reforçando a separação de responsabilidades.
 - O papel do orquestrador e o fluxo por fases aparecem formalizados no comando `run-project-state-full-report`.
 - O arquivo `AGENTS.md` concentra a versão operacional das regras descritas aqui em formato de estudo.
-- O arquivo `workflow-e-historico.md` preserva o contexto histórico e observações complementares que não precisam ficar no arquivo operacional.
+- O arquivo `history.md` preserva o contexto histórico e observações complementares que não precisam ficar no arquivo operacional.
 
 ## Estrutura-base de um bom prompt
 
 Ao montar um prompt mais robusto, a estrutura sugerida inclui:
 
-| Elemento | Função |
-| --- | --- |
-| Persona e escopo | Define o perfil do agente e o limite de atuação |
-| Objetivo | Explica claramente o resultado esperado |
-| Entrada | Especifica quais dados o agente pode usar |
-| Saída | Define o formato do resultado |
-| Critérios | Estabelece regras de validação e análise |
-| Ambiguidades e pressupostos | Orienta como agir diante de cenários incertos |
-| Instruções negativas | Restringe comportamentos indesejados |
-| Tratamento de erro | Define como responder quando a tarefa não puder ser executada |
-| Workflow | Resume o passo a passo operacional esperado |
+| Elemento                    | Função                                                        |
+| --------------------------- | ------------------------------------------------------------- |
+| Persona e escopo            | Define o perfil do agente e o limite de atuação               |
+| Objetivo                    | Explica claramente o resultado esperado                       |
+| Entrada                     | Especifica quais dados o agente pode usar                     |
+| Saída                       | Define o formato do resultado                                 |
+| Critérios                   | Estabelece regras de validação e análise                      |
+| Ambiguidades e pressupostos | Orienta como agir diante de cenários incertos                 |
+| Instruções negativas        | Restringe comportamentos indesejados                          |
+| Tratamento de erro          | Define como responder quando a tarefa não puder ser executada |
+| Workflow                    | Resume o passo a passo operacional esperado                   |
 
 O ponto mais importante é a clareza. Muitas vezes, a dificuldade em escrever um bom prompt não está na IA, mas em não sabermos exatamente o que queremos pedir.
 
@@ -262,11 +262,11 @@ Na parte seguinte, o material evolui do agente único para um workflow com vári
 
 Existem três papéis principais:
 
-| Papel | Responsabilidade |
-| --- | --- |
+| Papel                 | Responsabilidade                                      |
+| --------------------- | ----------------------------------------------------- |
 | Coordenador principal | Inicia tarefas, distribui contexto e chama os agentes |
-| Agentes especialistas | Executam análises específicas |
-| Orquestrador | Mantém o manifesto e registra o estado do processo |
+| Agentes especialistas | Executam análises específicas                         |
+| Orquestrador          | Mantém o manifesto e registra o estado do processo    |
 
 Esses papéis estão diretamente refletidos nos arquivos da pasta:
 
@@ -506,7 +506,7 @@ Se o objetivo for revisar o capítulo com foco didático, a sequência mais úti
 3. `agents/orchestrator.md`
 4. `commands/run-project-state-full-report.md`
 5. `AGENTS.md`
-6. `workflow-e-historico.md`
+6. `history.md`
 
 Essa ordem ajuda porque:
 
@@ -515,7 +515,7 @@ Essa ordem ajuda porque:
 - O `orchestrator` mostra o papel de controle de estado
 - O comando mostra a orquestração por fases
 - O `AGENTS.md` consolida tudo em formato operacional
-- O `workflow-e-historico.md` preserva o pano de fundo histórico do capítulo
+- O `history.md` preserva o pano de fundo histórico do capítulo
 
 ## Fluxo resumido
 
@@ -532,9 +532,3 @@ flowchart TD
     H --> I[Validação dos arquivos]
     I --> J[Geração de README final]
 ```
-
-## Pontos ambíguos ou incompletos
-
-- A transcrição repete vários conceitos em momentos diferentes; eles foram consolidados em uma única estrutura.
-- Os exemplos práticos citados no conteúdo estão parcialmente representados na própria pasta por meio de `AGENTS.md`, de `workflow-e-historico.md`, dos arquivos em `agents/` e do comando em `commands/`, mesmo quando o vídeo original não reproduz todos os outputs finais.
-- O material menciona ferramentas e comportamentos específicos de coordenadores como Claude Code, mas o princípio geral é aplicável a outros ambientes.
