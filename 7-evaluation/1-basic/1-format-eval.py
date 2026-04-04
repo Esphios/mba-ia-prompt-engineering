@@ -4,14 +4,21 @@ Format evaluation: JSON validity and schema validation.
 Demonstrates deterministic evaluation without LLM judges.
 """
 from langsmith import evaluate
-from langsmith.evaluation import LangChainStringEvaluator
 from pathlib import Path
 import json
 import jsonschema
+import sys
+from typing import Optional
+
+BASE_DIR = Path(__file__).resolve().parent
+PARENT_DIR = BASE_DIR.parent
+if str(PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(PARENT_DIR))
 
 from shared.clients import get_openai_client
 from shared.prompts import load_yaml_prompt, execute_text_prompt
-from shared.evaluators import prepare_prediction_only
+from shared.evaluators import create_run_evaluator, prepare_prediction_only
+from langsmith.schemas import Example, Run
 
 # Configuration
 DATASET_NAME = "evaluation_basic_dataset"
@@ -28,7 +35,7 @@ def run_format_evaluation(inputs: dict) -> dict:
 
 
 # JSON validity evaluator
-json_eval = LangChainStringEvaluator(
+json_eval = create_run_evaluator(
     "json_validity",
     prepare_data=prepare_prediction_only
 )
@@ -56,10 +63,11 @@ EXPECTED_SCHEMA = {
 }
 
 
-def validate_schema(run, example):
+def validate_schema(run: Run, example: Optional[Example]) -> dict:
     """Validate JSON against expected schema."""
     try:
-        output = run.outputs.get("output", "")
+        outputs = run.outputs or {}
+        output = outputs.get("output", "")
         data = json.loads(output)
         jsonschema.validate(instance=data, schema=EXPECTED_SCHEMA)
         return {"score": 1.0, "comment": "Valid schema"}

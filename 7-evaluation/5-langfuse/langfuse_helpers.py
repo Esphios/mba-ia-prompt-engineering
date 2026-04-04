@@ -1,5 +1,5 @@
 """Langfuse-specific helper functions."""
-import json
+from shared.parsers import coerce_text_content
 
 
 def run_with_chat_prompt(prompt_obj, inputs, oai_client):
@@ -25,7 +25,7 @@ def run_with_chat_prompt(prompt_obj, inputs, oai_client):
         temperature=get_temperature()
     )
 
-    return response.choices[0].message.content
+    return coerce_text_content(response.choices[0].message.content)
 
 
 def run_with_text_prompt(prompt_obj, oai_client, **kwargs):
@@ -51,7 +51,7 @@ def run_with_text_prompt(prompt_obj, oai_client, **kwargs):
         temperature=get_temperature()
     )
 
-    return response.choices[0].message.content
+    return coerce_text_content(response.choices[0].message.content)
 
 
 def parse_judge_response(response_text: str):

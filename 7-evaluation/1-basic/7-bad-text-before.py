@@ -5,12 +5,17 @@ Tests a prompt that adds explanatory text before the JSON response.
 Expected: LOW scores in format adherence.
 """
 from langsmith import evaluate
-from langsmith.evaluation import LangChainStringEvaluator
 from pathlib import Path
+import sys
+
+BASE_DIR = Path(__file__).resolve().parent
+PARENT_DIR = BASE_DIR.parent
+if str(PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(PARENT_DIR))
 
 from shared.clients import get_openai_client
 from shared.prompts import load_yaml_prompt, execute_text_prompt
-from shared.evaluators import prepare_with_input
+from shared.evaluators import create_run_evaluator, prepare_with_input
 
 # Configuration
 DATASET_NAME = "evaluation_basic_dataset"
@@ -30,27 +35,27 @@ def run_bad_text_before(inputs: dict) -> dict:
 # Evaluators focused on detecting lack of detail and depth
 evaluators = [
     # Detects lack of details (bad_text_before should have low score)
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "score_string",
         config={"criteria": "detail", "normalize_by": 10},
         prepare_data=prepare_with_input
     ),
 
     # Detects superficial analysis (bad_text_before should have low score)
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "score_string",
         config={"criteria": "depth", "normalize_by": 10},
         prepare_data=prepare_with_input
     ),
 
     # Additional metrics for context
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "score_string",
         config={"criteria": "helpfulness", "normalize_by": 10},
         prepare_data=prepare_with_input
     ),
 
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "score_string",
         config={"criteria": "coherence", "normalize_by": 10},
         prepare_data=prepare_with_input

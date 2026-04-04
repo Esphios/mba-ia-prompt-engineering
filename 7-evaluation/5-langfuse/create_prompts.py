@@ -1,9 +1,14 @@
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 load_dotenv()
 
 from langfuse import Langfuse
 import yaml
 import os
+from typing import List, Optional
 
 PROMPT_A_NAME = "prompt_doc_a"
 PROMPT_B_NAME = "prompt_doc_b"
@@ -23,7 +28,12 @@ def load_yaml_prompt(filename):
 
     return config["messages"]
 
-def create_chat_prompt(name: str, messages: list, description: str, labels: list = None):
+def create_chat_prompt(
+    name: str,
+    messages: list,
+    description: str,
+    labels: Optional[List[str]] = None,
+):
     """Creates a chat prompt in Langfuse"""
     # Convert messages from YAML format to Langfuse format
     # Expected format: [{"role": "system", "content": "..."}, ...]

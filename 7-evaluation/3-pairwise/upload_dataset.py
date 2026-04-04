@@ -1,5 +1,12 @@
 """Upload dataset to LangSmith with metadata support."""
 from pathlib import Path
+import sys
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+PARENT_DIR = SCRIPT_DIR.parent
+if str(PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(PARENT_DIR))
+
 from shared.clients import get_langsmith_client
 from shared.datasets import upload_langsmith_dataset
 

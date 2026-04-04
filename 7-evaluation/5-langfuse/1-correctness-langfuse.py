@@ -1,11 +1,23 @@
 """Correctness evaluation for Go code analyzer using Langfuse with LangChain."""
 from datetime import datetime
+from pathlib import Path
+import sys
+
+BASE_DIR = Path(__file__).resolve().parent
+PARENT_DIR = BASE_DIR.parent
+if str(PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(PARENT_DIR))
+
 from langfuse.langchain import CallbackHandler
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from shared.clients import get_langfuse_client
-from shared.parsers import parse_json_response
-from dotenv import load_dotenv
+from shared.parsers import coerce_text_content, parse_json_response
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 import yaml
 import os
 
@@ -63,9 +75,10 @@ if __name__ == "__main__":
         )
 
         # Parse findings
-        parsed = parse_json_response(response.content)
+        parsed = parse_json_response(coerce_text_content(response.content))
         predicted_findings = parsed.get("findings", []) if parsed else []
-        expected_findings = item.expected_output.get("findings", [])
+        expected_output = item.expected_output or {}
+        expected_findings = expected_output.get("findings", [])
 
         # Calculate score
         score = compare_findings(predicted_findings, expected_findings)

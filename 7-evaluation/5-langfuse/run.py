@@ -1,8 +1,17 @@
 from datetime import datetime
+from pathlib import Path
+import sys
+
+BASE_DIR = Path(__file__).resolve().parent
+PARENT_DIR = BASE_DIR.parent
+if str(PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(PARENT_DIR))
+
 from langfuse.langchain import CallbackHandler
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from shared.clients import get_langfuse_client
+from shared.parsers import coerce_text_content
 from langfuse_helpers import parse_judge_response, format_reasoning_summary
 
 # Initialize clients
@@ -76,7 +85,7 @@ if __name__ == "__main__":
                 "metadata": {"experiment": "DocPromptA", "prompt": "A", "timestamp": timestamp}
             }
         )
-        output_a = response_a.content
+        output_a = coerce_text_content(response_a.content)
         trace_id_a = handler_a.last_trace_id
         print(f"      Generated {len(output_a)} chars")
 
@@ -93,7 +102,7 @@ if __name__ == "__main__":
                 "metadata": {"experiment": "DocPromptB", "prompt": "B", "timestamp": timestamp}
             }
         )
-        output_b = response_b.content
+        output_b = coerce_text_content(response_b.content)
         trace_id_b = handler_b.last_trace_id
         print(f"      Generated {len(output_b)} chars")
 
@@ -102,7 +111,7 @@ if __name__ == "__main__":
         handler_judge = CallbackHandler()
         judge_inputs = {
             "code": str(item.input.get("files", "")),
-            "reference": str(item.expected_output.get("reference", "")),
+            "reference": str((item.expected_output or {}).get("reference", "")),
             "answer_a": output_a,
             "answer_b": output_b
         }
@@ -115,7 +124,7 @@ if __name__ == "__main__":
                 "metadata": {"experiment": "PairwiseJudge", "type": "evaluation", "timestamp": timestamp}
             }
         )
-        judge_response = response_judge.content
+        judge_response = coerce_text_content(response_judge.content)
         trace_id_judge = handler_judge.last_trace_id
 
         # Parse judge decision

@@ -4,12 +4,21 @@ Continuous criteria evaluation: Score-based evaluation using LLM judges.
 Demonstrates continuous evaluators (0.0-1.0) for nuanced quality assessment.
 """
 from langsmith import evaluate
-from langsmith.evaluation import LangChainStringEvaluator
 from pathlib import Path
+import sys
+
+BASE_DIR = Path(__file__).resolve().parent
+PARENT_DIR = BASE_DIR.parent
+if str(PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(PARENT_DIR))
 
 from shared.clients import get_openai_client
 from shared.prompts import load_yaml_prompt, execute_text_prompt
-from shared.evaluators import prepare_with_input, prepare_with_reference
+from shared.evaluators import (
+    create_run_evaluator,
+    prepare_with_input,
+    prepare_with_reference,
+)
 
 # Configuration
 DATASET_NAME = "evaluation_basic_dataset"
@@ -42,28 +51,28 @@ evaluators = [
     # WITHOUT reference - evaluates subjective quality
 
     # Conciseness: Also used in ex.2 to show difference binary (0/1) vs continuous (0.0-1.0)
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "score_string",
         config={"criteria": "conciseness", "normalize_by": 10},
         prepare_data=prepare_with_input
     ),
 
     # Coherence: Is analysis coherent and well-structured?
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "score_string",
         config={"criteria": "coherence", "normalize_by": 10},
         prepare_data=prepare_with_input
     ),
 
     # Detail: Does analysis detail line, issue type, severity?
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "score_string",
         config={"criteria": "detail", "normalize_by": 10},
         prepare_data=prepare_with_input
     ),
 
     # Depth: Does analysis go beyond obvious? Identifies non-trivial issues?
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "score_string",
         config={"criteria": "depth", "normalize_by": 10},
         prepare_data=prepare_with_input
@@ -72,7 +81,7 @@ evaluators = [
     # WITH reference - compares with expected output
 
     # Relevance: Is analysis relevant to provided code?
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "labeled_score_string",
         config={"criteria": "relevance", "normalize_by": 10},
         prepare_data=prepare_with_reference

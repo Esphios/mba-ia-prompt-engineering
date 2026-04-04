@@ -4,12 +4,17 @@ Correctness evaluation: Comparing predictions against reference outputs.
 Demonstrates labeled evaluators that use reference outputs for comparison.
 """
 from langsmith import evaluate
-from langsmith.evaluation import LangChainStringEvaluator
 from pathlib import Path
+import sys
+
+BASE_DIR = Path(__file__).resolve().parent
+PARENT_DIR = BASE_DIR.parent
+if str(PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(PARENT_DIR))
 
 from shared.clients import get_openai_client
 from shared.prompts import load_yaml_prompt, execute_text_prompt
-from shared.evaluators import prepare_with_reference
+from shared.evaluators import create_run_evaluator, prepare_with_reference
 
 # Configuration
 DATASET_NAME = "evaluation_basic_dataset"
@@ -27,12 +32,12 @@ def run_correctness_evaluation(inputs: dict) -> dict:
 
 # Labeled evaluators with reference outputs
 evaluators = [
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "labeled_score_string",
         config={"criteria": "correctness", "normalize_by": 10},
         prepare_data=prepare_with_reference
     ),
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "labeled_score_string",
         config={"criteria": "relevance", "normalize_by": 10},
         prepare_data=prepare_with_reference

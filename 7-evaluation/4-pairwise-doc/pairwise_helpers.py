@@ -1,6 +1,10 @@
 """Helpers for documentation pairwise evaluation."""
-import json
-from shared.parsers import parse_json_response
+from typing import Any, Dict, Optional, Sequence
+
+from langsmith.evaluation import comparison_evaluator
+from langsmith.schemas import Example, Run
+
+from shared.parsers import coerce_text_content, parse_json_response
 
 
 def create_pairwise_judge(judge_prompt_obj, oai_client):
@@ -18,15 +22,20 @@ def create_pairwise_judge(judge_prompt_obj, oai_client):
     """
     from shared.clients import get_model_name, get_temperature
 
-    def pairwise_judge(inputs: dict, outputs: list, reference_outputs: dict = None):
+    @comparison_evaluator
+    def pairwise_judge(runs: Sequence[Run], example: Optional[Example] = None) -> dict:
         """Pairwise judge with reasoning."""
-        code = inputs.get("files", "")
-        answer_a = outputs[0].get("output", "")
-        answer_b = outputs[1].get("output", "")
+        if len(runs) != 2:
+            raise ValueError("Pairwise evaluation requires exactly 2 runs.")
 
-        reference = ""
-        if reference_outputs:
-            reference = reference_outputs.get("reference", "")
+        example_inputs = example.inputs or {} if example else {}
+        outputs_a = runs[0].outputs or {}
+        outputs_b = runs[1].outputs or {}
+        code = example_inputs.get("files", "")
+        answer_a = outputs_a.get("output", "")
+        answer_b = outputs_b.get("output", "")
+        reference_outputs = example.outputs if example else {}
+        reference = reference_outputs.get("reference", "") if reference_outputs else ""
 
         # Format judge prompt
         judge_prompt = judge_prompt_obj.format(
@@ -43,7 +52,7 @@ def create_pairwise_judge(judge_prompt_obj, oai_client):
             temperature=get_temperature()
         )
 
-        full_response = response.choices[0].message.content.strip()
+        full_response = coerce_text_content(response.choices[0].message.content).strip()
 
         # Try to parse structured response
         try:
@@ -53,65 +62,45 @@ def create_pairwise_judge(judge_prompt_obj, oai_client):
 
             # Format reasoning for display
             comment = format_reasoning_as_text(decision, reasoning)
+            run_id_a = str(runs[0].id)
+            run_id_b = str(runs[1].id)
 
-            # Return with run IDs if available
-            if hasattr(outputs[0], 'id') and hasattr(outputs[1], 'id'):
-                run_id_a = str(outputs[0].id)
-                run_id_b = str(outputs[1].id)
-
-                if decision == "A":
-                    scores = {run_id_a: 1.0, run_id_b: 0.0}
-                elif decision == "B":
-                    scores = {run_id_a: 0.0, run_id_b: 1.0}
-                else:
-                    scores = {run_id_a: 0.5, run_id_b: 0.5}
-
-                return {
-                    "key": "ranked_preference",
-                    "scores": scores,
-                    "comment": comment
-                }
+            if decision == "A":
+                scores = {run_id_a: 1.0, run_id_b: 0.0}
+            elif decision == "B":
+                scores = {run_id_a: 0.0, run_id_b: 1.0}
             else:
-                # Fallback to simple list format
-                if decision == "A":
-                    return [1.0, 0.0]
-                elif decision == "B":
-                    return [0.0, 1.0]
-                else:
-                    return [0.5, 0.5]
+                scores = {run_id_a: 0.5, run_id_b: 0.5}
 
-        except Exception as e:
+            return {
+                "key": "ranked_preference",
+                "scores": scores,
+                "comment": comment
+            }
+
+        except Exception:
             # Fallback if JSON parsing fails
             decision = full_response.upper()
+            run_id_a = str(runs[0].id)
+            run_id_b = str(runs[1].id)
 
-            if hasattr(outputs[0], 'id') and hasattr(outputs[1], 'id'):
-                run_id_a = str(outputs[0].id)
-                run_id_b = str(outputs[1].id)
-
-                if "A" in decision and "B" not in decision:
-                    scores = {run_id_a: 1.0, run_id_b: 0.0}
-                elif "B" in decision and "A" not in decision:
-                    scores = {run_id_a: 0.0, run_id_b: 1.0}
-                else:
-                    scores = {run_id_a: 0.5, run_id_b: 0.5}
-
-                return {
-                    "key": "ranked_preference",
-                    "scores": scores,
-                    "comment": f"[Fallback] {full_response[:200]}"
-                }
+            if "A" in decision and "B" not in decision:
+                scores = {run_id_a: 1.0, run_id_b: 0.0}
+            elif "B" in decision and "A" not in decision:
+                scores = {run_id_a: 0.0, run_id_b: 1.0}
             else:
-                if "A" in decision and "B" not in decision:
-                    return [1.0, 0.0]
-                elif "B" in decision and "A" not in decision:
-                    return [0.0, 1.0]
-                else:
-                    return [0.5, 0.5]
+                scores = {run_id_a: 0.5, run_id_b: 0.5}
+
+            return {
+                "key": "ranked_preference",
+                "scores": scores,
+                "comment": f"[Fallback] {full_response[:200]}"
+            }
 
     return pairwise_judge
 
 
-def format_reasoning_as_text(decision: str, reasoning: dict) -> str:
+def format_reasoning_as_text(decision: str, reasoning: Dict[str, Any]) -> str:
     """
     Format structured reasoning dictionary as human-readable text.
 

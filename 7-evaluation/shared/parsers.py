@@ -1,8 +1,28 @@
 """JSON and markdown parsing utilities."""
 import json
+from typing import Any, Dict
 
 
-def parse_json_response(text: str) -> dict:
+def coerce_text_content(content: Any) -> str:
+    """Normalize text or multimodal content blocks into plain text."""
+    if isinstance(content, str):
+        return content
+
+    if isinstance(content, list):
+        parts = []
+        for item in content:
+            if isinstance(item, str):
+                parts.append(item)
+            elif isinstance(item, dict):
+                text = item.get("text")
+                if isinstance(text, str):
+                    parts.append(text)
+        return "\n".join(part for part in parts if part)
+
+    return str(content)
+
+
+def parse_json_response(text: Any) -> Dict[str, Any]:
     """
     Parse JSON from LLM response, removing markdown blocks if present.
 
@@ -27,16 +47,17 @@ def parse_json_response(text: str) -> dict:
         >>> parse_json_response('invalid')
         {}
     """
-    text = text.strip()
+    normalized_text = coerce_text_content(text).strip()
 
     # Remove markdown code blocks
-    if text.startswith("```"):
-        start = text.find("{")
-        end = text.rfind("}") + 1
+    if normalized_text.startswith("```"):
+        start = normalized_text.find("{")
+        end = normalized_text.rfind("}") + 1
         if start != -1 and end > start:
-            text = text[start:end]
+            normalized_text = normalized_text[start:end]
 
     try:
-        return json.loads(text)
+        parsed = json.loads(normalized_text)
+        return parsed if isinstance(parsed, dict) else {}
     except (json.JSONDecodeError, ValueError):
         return {}

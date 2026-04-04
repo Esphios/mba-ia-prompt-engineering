@@ -1,5 +1,9 @@
 """Documentation-specific evaluators."""
-from langsmith.evaluation import LangChainStringEvaluator
+from typing import Optional
+
+from langsmith.schemas import Example, Run
+
+from shared.evaluators import EvaluatorInput, create_run_evaluator
 
 
 def create_evaluators_for_documentation():
@@ -26,24 +30,31 @@ def create_evaluators_for_documentation():
         ...     evaluators=evaluators
         ... )
     """
-    def prepare_data_with_reference(run, example):
+    def prepare_data_with_reference(
+        run: Run,
+        example: Optional[Example],
+    ) -> EvaluatorInput:
         """Prepare data with reference for comparison."""
+        example_inputs = example.inputs or {} if example else {}
+        example_outputs = example.outputs or {} if example else {}
         return {
-            "prediction": run.outputs.get("output", ""),
-            "input": str(example.inputs.get("files", "")),
-            "reference": example.outputs.get("reference", "")
+            "prediction": (run.outputs or {}).get("output", ""),
+            "input": str(example_inputs.get("files", "")),
+            "reference": str(example_outputs.get("reference", "")),
         }
 
-    def prepare_data(run, example):
+    def prepare_data(run: Run, example: Optional[Example]) -> EvaluatorInput:
         """Prepare data without reference."""
+        example_inputs = example.inputs or {} if example else {}
         return {
-            "prediction": run.outputs.get("output", ""),
-            "input": str(example.inputs.get("files", ""))
+            "prediction": (run.outputs or {}).get("output", ""),
+            "input": str(example_inputs.get("files", "")),
+            "reference": None,
         }
 
     return [
         # 1. Conciseness alignment
-        LangChainStringEvaluator(
+        create_run_evaluator(
             "labeled_score_string",
             config={
                 "criteria": {
@@ -61,7 +72,7 @@ def create_evaluators_for_documentation():
         ),
 
         # 2. Detail level alignment
-        LangChainStringEvaluator(
+        create_run_evaluator(
             "labeled_score_string",
             config={
                 "criteria": {
@@ -79,7 +90,7 @@ def create_evaluators_for_documentation():
         ),
 
         # 3. Tone and style alignment
-        LangChainStringEvaluator(
+        create_run_evaluator(
             "labeled_score_string",
             config={
                 "criteria": {
@@ -96,7 +107,7 @@ def create_evaluators_for_documentation():
         ),
 
         # 4. Structure alignment
-        LangChainStringEvaluator(
+        create_run_evaluator(
             "labeled_score_string",
             config={
                 "criteria": {
@@ -113,7 +124,7 @@ def create_evaluators_for_documentation():
         ),
 
         # 5. Content coverage
-        LangChainStringEvaluator(
+        create_run_evaluator(
             "labeled_score_string",
             config={
                 "criteria": {
@@ -130,7 +141,7 @@ def create_evaluators_for_documentation():
         ),
 
         # 6. Terminology consistency
-        LangChainStringEvaluator(
+        create_run_evaluator(
             "labeled_score_string",
             config={
                 "criteria": {
@@ -147,7 +158,7 @@ def create_evaluators_for_documentation():
         ),
 
         # 7. Faithfulness to code
-        LangChainStringEvaluator(
+        create_run_evaluator(
             "score_string",
             config={
                 "criteria": {

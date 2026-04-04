@@ -1,5 +1,15 @@
 """Precision, Recall, and F1 Score metrics for evaluation."""
-from typing import Set, Callable, List, Dict
+from typing import Any, Callable, Dict, List, Set
+
+from langsmith.evaluation.evaluator import EvaluationResult, EvaluationResults
+from pathlib import Path
+import sys
+
+CURRENT_DIR = Path(__file__).resolve().parent
+PARENT_DIR = CURRENT_DIR.parent
+if str(PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(PARENT_DIR))
+
 from shared.parsers import parse_json_response
 
 
@@ -7,8 +17,8 @@ def calculate_precision_recall_f1(
     outputs: List[Dict],
     examples: List,
     extract_predicted: Callable[[Dict], Set],
-    extract_expected: Callable[[Dict], Set]
-) -> List[Dict]:
+    extract_expected: Callable[[Any], Set]
+) -> EvaluationResults:
     """
     Calculate precision, recall, and F1 score.
 
@@ -51,23 +61,25 @@ def calculate_precision_recall_f1(
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0
     f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
 
-    return [
-        {
-            "key": "precision",
-            "score": precision,
-            "comment": f"TP:{tp} FP:{fp}"
-        },
-        {
-            "key": "recall",
-            "score": recall,
-            "comment": f"TP:{tp} FN:{fn}"
-        },
-        {
-            "key": "f1",
-            "score": f1,
-            "comment": f"P:{precision:.2f} R:{recall:.2f}"
-        }
-    ]
+    return EvaluationResults(
+        results=[
+            EvaluationResult(
+                key="precision",
+                score=precision,
+                comment=f"TP:{tp} FP:{fp}",
+            ),
+            EvaluationResult(
+                key="recall",
+                score=recall,
+                comment=f"TP:{tp} FN:{fn}",
+            ),
+            EvaluationResult(
+                key="f1",
+                score=f1,
+                comment=f"P:{precision:.2f} R:{recall:.2f}",
+            ),
+        ]
+    )
 
 
 def extract_findings_comparable(output: Dict) -> Set[tuple]:

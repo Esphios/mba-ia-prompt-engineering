@@ -1,4 +1,10 @@
 """Helpers for pairwise evaluation."""
+from typing import Optional, Sequence
+
+from langsmith.evaluation import comparison_evaluator
+from langsmith.schemas import Example, Run
+
+from shared.parsers import coerce_text_content
 
 
 def create_pairwise_evaluator(judge_prompt_obj, oai_client):
@@ -34,11 +40,18 @@ def create_pairwise_evaluator(judge_prompt_obj, oai_client):
     """
     from shared.clients import get_model_name, get_temperature
 
-    def evaluate_pairwise(inputs: dict, outputs: list, reference_outputs: dict = None):
+    @comparison_evaluator
+    def evaluate_pairwise(runs: Sequence[Run], example: Optional[Example] = None) -> dict:
         """Pairwise comparison evaluator."""
-        code = inputs.get("code", "")
-        answer_a = outputs[0].get("output", "")
-        answer_b = outputs[1].get("output", "")
+        if len(runs) != 2:
+            raise ValueError("Pairwise evaluation requires exactly 2 runs.")
+
+        example_inputs = example.inputs or {} if example else {}
+        outputs_a = runs[0].outputs or {}
+        outputs_b = runs[1].outputs or {}
+        code = example_inputs.get("code", "")
+        answer_a = outputs_a.get("output", "")
+        answer_b = outputs_b.get("output", "")
 
         # Format judge prompt
         judge_prompt = judge_prompt_obj.format(
@@ -54,14 +67,16 @@ def create_pairwise_evaluator(judge_prompt_obj, oai_client):
             temperature=get_temperature()
         )
 
-        decision = response.choices[0].message.content.strip().upper()
+        decision = coerce_text_content(response.choices[0].message.content).strip().upper()
 
         # Parse decision
         if "A" in decision and "B" not in decision:
-            return [1.0, 0.0]  # A wins
+            scores = {str(runs[0].id): 1.0, str(runs[1].id): 0.0}
         elif "B" in decision and "A" not in decision:
-            return [0.0, 1.0]  # B wins
+            scores = {str(runs[0].id): 0.0, str(runs[1].id): 1.0}
         else:
-            return [0.5, 0.5]  # Tie
+            scores = {str(runs[0].id): 0.5, str(runs[1].id): 0.5}
+
+        return {"key": "ranked_preference", "scores": scores}
 
     return evaluate_pairwise

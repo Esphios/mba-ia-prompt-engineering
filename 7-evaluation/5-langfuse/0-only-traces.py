@@ -3,7 +3,11 @@ from datetime import datetime
 from langfuse.langchain import CallbackHandler
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 
 load_dotenv()
 
@@ -11,7 +15,7 @@ load_dotenv()
 langfuse_handler = CallbackHandler()
 
 # Inicializa o LLM
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7, max_tokens=500)
+llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.7, max_completion_tokens=500)
 
 # Define o prompt template
 prompt = ChatPromptTemplate.from_messages([
@@ -40,7 +44,7 @@ def generate_language_history(linguagem):
         config={"callbacks": [langfuse_handler]}
     )
 
-    return response.content
+    return str(response.content)
 
 
 if __name__ == "__main__":

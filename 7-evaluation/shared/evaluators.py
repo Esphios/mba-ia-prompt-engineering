@@ -1,7 +1,29 @@
 """Helper functions for creating prepare_data functions."""
+from typing import Any, Callable, Dict, Optional
+
+from langsmith.evaluation import LangChainStringEvaluator
+from langsmith.evaluation.evaluator import RunEvaluator
+from langsmith.evaluation.integrations._langchain import SingleEvaluatorInput
+from langsmith.schemas import Example, Run
+
+EvaluatorInput = SingleEvaluatorInput
 
 
-def prepare_prediction_only(run, example):
+def create_run_evaluator(
+    evaluator: str,
+    *,
+    config: Optional[Dict[str, Any]] = None,
+    prepare_data: Optional[Callable[[Run, Optional[Example]], SingleEvaluatorInput]] = None,
+) -> RunEvaluator:
+    """Create a LangChain evaluator converted to LangSmith RunEvaluator."""
+    return LangChainStringEvaluator(
+        evaluator,
+        config=config,
+        prepare_data=prepare_data,
+    ).as_run_evaluator()
+
+
+def prepare_prediction_only(run: Run, example: Optional[Example]) -> EvaluatorInput:
     """
     Prepare data with only prediction (for evaluators that don't need input/reference).
 
@@ -16,10 +38,19 @@ def prepare_prediction_only(run, example):
     Returns:
         {"prediction": str}
     """
-    return {"prediction": run.outputs.get("output", "")}
+    outputs = run.outputs or {}
+    return {
+        "prediction": outputs.get("output", ""),
+        "input": None,
+        "reference": None,
+    }
 
 
-def prepare_with_input(run, example, input_key="code"):
+def prepare_with_input(
+    run: Run,
+    example: Optional[Example],
+    input_key: str = "code",
+) -> EvaluatorInput:
     """
     Prepare data with prediction + input (for evaluators without reference).
 
@@ -36,13 +67,20 @@ def prepare_with_input(run, example, input_key="code"):
     Returns:
         {"prediction": str, "input": str}
     """
+    outputs = run.outputs or {}
+    example_inputs = example.inputs or {} if example else {}
     return {
-        "prediction": run.outputs.get("output", ""),
-        "input": example.inputs.get(input_key, "")
+        "prediction": outputs.get("output", ""),
+        "input": str(example_inputs.get(input_key, "")),
+        "reference": None,
     }
 
 
-def prepare_with_reference(run, example, input_key="code"):
+def prepare_with_reference(
+    run: Run,
+    example: Optional[Example],
+    input_key: str = "code",
+) -> EvaluatorInput:
     """
     Prepare data with prediction + input + reference (for labeled evaluators).
 
@@ -59,8 +97,10 @@ def prepare_with_reference(run, example, input_key="code"):
     Returns:
         {"prediction": str, "input": str, "reference": dict}
     """
+    outputs = run.outputs or {}
+    example_inputs = example.inputs or {} if example else {}
     return {
-        "prediction": run.outputs.get("output", ""),
-        "input": example.inputs.get(input_key, ""),
-        "reference": example.outputs
+        "prediction": outputs.get("output", ""),
+        "input": str(example_inputs.get(input_key, "")),
+        "reference": example.outputs if example else None,
     }

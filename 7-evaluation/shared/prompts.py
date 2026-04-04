@@ -1,7 +1,10 @@
 """Utilities for loading and executing prompts."""
-from langchain.prompts import load_prompt
 from pathlib import Path
 from typing import Optional
+
+from langchain.prompts import load_prompt
+
+from shared.parsers import coerce_text_content
 
 
 def load_yaml_prompt(filename: str, prompts_dir: Optional[Path] = None):
@@ -24,12 +27,12 @@ def load_yaml_prompt(filename: str, prompts_dir: Optional[Path] = None):
         caller_file = Path(inspect.stack()[1].filename)
         prompts_dir = caller_file.parent / "prompts"
 
-    return load_prompt(prompts_dir / filename)
+    return load_prompt(str(prompts_dir / filename))
 
 
 def execute_text_prompt(prompt_obj, inputs: dict, oai_client,
-                        input_key: str = "code", model: str = None,
-                        temperature: float = None):
+                        input_key: str = "code", model: Optional[str] = None,
+                        temperature: Optional[float] = None) -> dict:
     """
     Execute simple text prompt (PromptTemplate).
 
@@ -64,7 +67,7 @@ def execute_text_prompt(prompt_obj, inputs: dict, oai_client,
         temperature=temperature
     )
 
-    return {"output": response.choices[0].message.content}
+    return {"output": coerce_text_content(response.choices[0].message.content)}
 
 
 def convert_langchain_to_openai_messages(messages):
@@ -84,13 +87,13 @@ def convert_langchain_to_openai_messages(messages):
     openai_messages = []
     for m in messages:
         role = "user" if m.type == "human" else m.type
-        openai_messages.append({"role": role, "content": m.content})
+        openai_messages.append({"role": role, "content": coerce_text_content(m.content)})
     return openai_messages
 
 
 def execute_chat_prompt(prompt_obj, inputs: dict, oai_client,
-                       model: str = None, temperature: float = None,
-                       **format_kwargs):
+                       model: Optional[str] = None, temperature: Optional[float] = None,
+                       **format_kwargs) -> dict:
     """
     Execute chat prompt (ChatPromptTemplate).
 
@@ -129,4 +132,4 @@ def execute_chat_prompt(prompt_obj, inputs: dict, oai_client,
         temperature=temperature
     )
 
-    return {"output": response.choices[0].message.content}
+    return {"output": coerce_text_content(response.choices[0].message.content)}

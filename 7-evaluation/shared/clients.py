@@ -1,16 +1,23 @@
 """LLM and observability platform clients."""
+import importlib
 import os
-from langsmith.wrappers import wrap_openai
-from langsmith import Client as LangSmithClient
-from openai import OpenAI
+from typing import Any
+
 from langfuse import Langfuse
-from dotenv import load_dotenv
+from langsmith import Client as LangSmithClient
+from langsmith.wrappers import wrap_openai
+from openai import OpenAI
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 
 # Load environment variables
 load_dotenv()
 
 
-def get_openai_client():
+def get_openai_client() -> Any:
     """
     Returns OpenAI client with LangSmith tracing.
 
@@ -44,7 +51,7 @@ def get_temperature() -> float:
     return float(os.getenv("LLM_TEMPERATURE", "0"))
 
 
-def get_langsmith_client():
+def get_langsmith_client() -> LangSmithClient:
     """
     Returns LangSmith client.
 
@@ -54,7 +61,7 @@ def get_langsmith_client():
     return LangSmithClient()
 
 
-def get_langfuse_client():
+def get_langfuse_client() -> Langfuse:
     """
     Returns Langfuse client.
 
@@ -64,7 +71,7 @@ def get_langfuse_client():
     return Langfuse()
 
 
-def get_openai_client_langfuse():
+def get_openai_client_langfuse() -> Any:
     """
     Returns OpenAI client with Langfuse tracing.
 
@@ -75,5 +82,6 @@ def get_openai_client_langfuse():
     Returns:
         OpenAI client wrapped with Langfuse tracing
     """
-    from langfuse.openai import OpenAI as LangfuseOpenAI
-    return LangfuseOpenAI()
+    langfuse_openai = importlib.import_module("langfuse.openai")
+
+    return getattr(langfuse_openai, "OpenAI")()

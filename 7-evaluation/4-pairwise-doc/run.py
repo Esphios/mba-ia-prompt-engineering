@@ -1,6 +1,13 @@
 from langsmith import evaluate, Client
 from langsmith.evaluation import evaluate_comparative
 from datetime import datetime
+from pathlib import Path
+import sys
+
+BASE_DIR = Path(__file__).resolve().parent
+PARENT_DIR = BASE_DIR.parent
+if str(PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(PARENT_DIR))
 
 from shared.clients import get_openai_client
 from shared.prompts import load_yaml_prompt, execute_chat_prompt
@@ -71,7 +78,7 @@ if __name__ == "__main__":
 
     print("Running pairwise comparison (LLM-as-Judge)...")
     pairwise_results = evaluate_comparative(
-        [results_a.experiment_name, results_b.experiment_name],
+        (results_a.experiment_name, results_b.experiment_name),
         evaluators=[pairwise_judge],
         experiment_prefix=f"DocPairwise_{timestamp}",
         max_concurrency=2

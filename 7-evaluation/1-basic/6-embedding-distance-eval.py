@@ -5,12 +5,17 @@ Embedding distance evaluation: Semantic similarity measurement.
 Demonstrates deterministic evaluator using vector embeddings.
 """
 from langsmith import evaluate
-from langsmith.evaluation import LangChainStringEvaluator
 from pathlib import Path
+import sys
+
+BASE_DIR = Path(__file__).resolve().parent
+PARENT_DIR = BASE_DIR.parent
+if str(PARENT_DIR) not in sys.path:
+    sys.path.insert(0, str(PARENT_DIR))
 
 from shared.clients import get_openai_client
 from shared.prompts import load_yaml_prompt, execute_text_prompt
-from shared.evaluators import prepare_with_reference
+from shared.evaluators import create_run_evaluator, prepare_with_reference
 
 # Configuration
 DATASET_NAME = "evaluation_basic_dataset"
@@ -34,7 +39,7 @@ def run_embedding_evaluation(inputs: dict) -> dict:
 # - Uses OpenAI embeddings by default
 # - Faster and cheaper than LLM-based evaluators
 evaluators = [
-    LangChainStringEvaluator(
+    create_run_evaluator(
         "embedding_distance",
         prepare_data=prepare_with_reference
     )
