@@ -3,7 +3,11 @@ Simple agent to create pull requests using native LangChain.
 """
 
 from dataclasses import dataclass, asdict
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts.loading import load_prompt
 from langchain_core.output_parsers import StrOutputParser

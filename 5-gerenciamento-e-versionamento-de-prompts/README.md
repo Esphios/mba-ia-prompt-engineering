@@ -1,124 +1,59 @@
-# Gerenciamento e versionamento de prompts
+# Capítulo 5: Gerenciamento e Versionamento de Prompts
 
-Os exemplos estão organizados em duas categorias principais de gerenciamento de prompts:
+Este capítulo discute prompt como ativo versionável de engenharia. Ele é importante porque conecta autoria de prompts, registry local, testes, colaboração em equipe e integração com plataforma externa.
 
-### 1. Versionamento Local de Prompts
+## Estrutura da pasta
 
-- **Sistema de Registry**: Gerenciamento local usando arquivos YAML estruturados
-- **Versionamento por Diretórios**: Organização hierárquica com versões separadas
-- **Validação Estática**: Testes automatizados para verificar estrutura e sintaxe
+| Caminho | Papel |
+| --- | --- |
+| `gerenciamento-e-versionamento-de-prompts.md` | aula principal do capítulo |
+| `history.md` | memória editorial, contexto removido e decisões de organização |
+| `src/` | implementação dos agentes e utilitários de registry/LangSmith |
+| `prompts/` | prompts versionados e registry YAML |
+| `tests/` | validação automatizada dos prompts |
+| `AGENTS.md` | orientações curtas para agentes |
 
-### 2. Versionamento com LangSmith
+## O que estudar aqui
 
-- **Sincronização Remota**: Push e pull de prompts para/da plataforma LangSmith
-- **Controle de Versões**: Integração com sistema de tags e versionamento do LangSmith
-- **Colaboração**: Compartilhamento e colaboração em equipe através da plataforma
+O capítulo aprofunda:
 
-## Estrutura do Projeto
+- diferença entre prompts de produtividade e prompts de produção;
+- versionamento com Git;
+- organização de repositório de prompts;
+- registry local com YAML;
+- testes e validação;
+- push e pull de prompts com LangSmith.
 
-O projeto está organizado com diretórios separados para prompts versionados, código fonte, testes automatizados e arquivos de configuração.
+Para a explicação completa, leia `gerenciamento-e-versionamento-de-prompts.md`.
 
-## Configuração do Ambiente
+## Como executar
 
-### 1. Criação do Ambiente Virtual
+```powershell
+python .\src\agent_code_reviewer.py
+python .\src\agent_pull_request.py
+python .\src\langsmith_push.py
+pytest .\tests\test_prompts.py -v
+```
 
-```bash
-# Criar ambiente virtual
+## Setup local
+
+```powershell
 python -m venv venv
-
-# Ativar ambiente virtual
-# No Linux/Mac:
-source venv/bin/activate
-
-# No Windows:
-venv\Scripts\activate
-```
-
-### 2. Instalação de Dependências
-
-```bash
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+Copy-Item .env.example .env
 ```
 
-### 3. Configuração das Variáveis de Ambiente
+Variáveis de ambiente mais importantes:
 
-Copie o arquivo `.env.example` para `.env` e configure as variáveis necessárias:
-
-```bash
-cp .env.example .env
-```
-
-**Variáveis de ambiente necessárias:**
-
-```bash
-# Configuração da API OpenAI (obrigatória)
-OPENAI_API_KEY=sk-your-api-key-here
-
-# Configurações do LangSmith (opcionais, necessárias apenas para integração com LangSmith)
+```env
+OPENAI_API_KEY=
 LANGCHAIN_TRACING_V2=false
 LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
-LANGCHAIN_API_KEY=your-langsmith-key-here
+LANGCHAIN_API_KEY=
 LANGCHAIN_PROJECT=prompt-management-system
 ```
 
-**Descrição das variáveis:**
+## Importância do capítulo
 
-- `OPENAI_API_KEY`: Chave da API OpenAI (obrigatória para execução dos exemplos)
-- `LANGCHAIN_TRACING_V2`: Habilita/desabilita o tracing do LangSmith
-- `LANGCHAIN_ENDPOINT`: Endpoint da API do LangSmith
-- `LANGCHAIN_API_KEY`: Chave da API do LangSmith (necessária para push/pull de prompts)
-- `LANGCHAIN_PROJECT`: Nome do projeto no LangSmith para organização dos prompts
-
-## Exemplos de Uso
-
-### Versionamento Local
-
-#### 1. Usando o Registry Local
-
-O sistema de registry permite carregar prompts locais de forma estruturada e versionada.
-
-#### 2. Executando Agentes Localmente
-
-```bash
-# Agente revisor de código
-python src/agent_code_reviewer.py
-
-# Agente criador de pull requests
-python src/agent_pull_request.py
-```
-
-### Versionamento com LangSmith
-
-#### 1. Push de Prompts para LangSmith
-
-Execute o script para sincronizar prompts locais com a plataforma LangSmith.
-
-#### 2. Pull de Prompts do LangSmith
-
-Execute o script para usar prompts diretamente da plataforma LangSmith.
-
-## Sistema de Registry
-
-O arquivo `prompts/registry.yaml` centraliza o gerenciamento dos prompts, mapeando IDs para suas respectivas versões e configurações.
-
-## Estrutura dos Prompts
-
-Cada prompt segue uma estrutura padronizada com campos obrigatórios como `id`, `version`, `template` e `input_variables`, além de metadados opcionais.
-
-## Testes Automatizados
-
-O projeto inclui um sistema completo de testes para validar os prompts:
-
-### Executar Todos os Testes
-
-```bash
-# Executar com pytest
-pytest tests/test_prompts.py -v
-
-# Ou executar diretamente
-python tests/test_prompts.py
-```
-
-## Observações sobre a versão da LangChain
-
-Apesar da versão estável da LangChain no momento da criação do exemplo ser a 0.3, os exemplos foram realizados utilizando a versão 1.0.0a5, onde há mudanças consideráveis na API.
+Este é o capítulo que transforma prompt em artefato com ciclo de vida. Sem ele, o curso explicaria como escrever prompts, mas não como manter, testar e promover versões de forma disciplinada.

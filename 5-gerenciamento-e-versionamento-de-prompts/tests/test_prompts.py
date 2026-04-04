@@ -3,12 +3,13 @@ Static validation tests for all system prompts.
 Validates structure, syntax and rendering without using LLM.
 """
 
-import yaml
 import pytest
 import re
 import string
 from pathlib import Path
 from typing import Dict, List, Any, Tuple
+
+yaml = pytest.importorskip("yaml", reason="PyYAML is required for prompt registry validation")
 
 
 @pytest.fixture(scope="session")
