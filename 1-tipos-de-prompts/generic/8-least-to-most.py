@@ -2,10 +2,21 @@ from __future__ import annotations
 
 import argparse
 
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 from pydantic import BaseModel, Field
 
-from common import DEFAULT_TASK, SimpleResponse, build_llm, print_llm_result, resolve_text
+from common import (
+    DEFAULT_TASK,
+    SimpleResponse,
+    build_llm,
+    print_llm_result,
+    resolve_message_text,
+    resolve_text,
+)
 
 
 class SubproblemList(BaseModel):
@@ -28,7 +39,7 @@ def main() -> None:
     task = resolve_text(args.task, args.task_file, DEFAULT_TASK)
     llm = build_llm(args.model, args.temperature)
     structured = llm.with_structured_output(SubproblemList)
-    subproblems = structured.invoke(
+    structured_response = structured.invoke(
         f"""
 Break the task below into an ordered list of subproblems from easiest to hardest.
 Keep the list concise and actionable.
@@ -36,12 +47,17 @@ Keep the list concise and actionable.
 Task:
 {task}
 """
-    ).subproblems
+    )
+    if isinstance(structured_response, SubproblemList):
+        subproblems = structured_response.subproblems
+    else:
+        subproblems = list(structured_response.get("subproblems", []))
 
     solved: list[str] = []
     progress_lines: list[str] = []
     for index, subproblem in enumerate(subproblems, start=1):
-        solution = llm.invoke(
+        solution = resolve_message_text(
+            llm.invoke(
             f"""
 Solve subproblem {index} below.
 You may use the previously solved subproblems as context.
@@ -55,11 +71,13 @@ Previous solutions:
 Current subproblem:
 {subproblem}
 """
-        ).content
+            ).content
+        )
         solved.append(f"Subproblem {index}: {subproblem}\nSolution: {solution}")
         progress_lines.append(f"[x] {subproblem}\n{solution}")
 
-    final_answer = llm.invoke(
+    final_answer = resolve_message_text(
+        llm.invoke(
         f"""
 Combine the solved subproblems below into one final integrated answer.
 
@@ -69,7 +87,8 @@ Original task:
 Solved subproblems:
 {chr(10).join(solved)}
 """
-    ).content
+        ).content
+    )
 
     content = "TO-DO LIST AND SOLUTIONS\n\n" + "\n\n".join(progress_lines) + "\n\nFINAL INTEGRATED ANSWER\n\n" + final_answer
     print_llm_result(task, SimpleResponse(content))

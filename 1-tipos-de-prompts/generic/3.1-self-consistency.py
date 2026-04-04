@@ -4,9 +4,20 @@ import argparse
 import json
 from collections import Counter
 
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 
-from common import DEFAULT_TASK, SimpleResponse, build_llm, print_llm_result, resolve_text
+from common import (
+    DEFAULT_TASK,
+    SimpleResponse,
+    build_llm,
+    print_llm_result,
+    resolve_message_text,
+    resolve_text,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -45,8 +56,9 @@ Task:
     final_answers: list[str] = []
     for _ in range(args.samples):
         response = llm.invoke(prompt)
-        samples.append(response.content)
-        final_answers.append(extract_answer(response.content, args.answer_label))
+        content = resolve_message_text(response.content)
+        samples.append(content)
+        final_answers.append(extract_answer(content, args.answer_label))
 
     counts = Counter(final_answers)
     chosen_answer, votes = counts.most_common(1)[0]

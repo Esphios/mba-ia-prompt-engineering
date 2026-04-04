@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from typing import Any
 
 from langchain_openai import ChatOpenAI
 
@@ -39,3 +40,22 @@ def resolve_text(inline_text: str | None, file_path: str | None, default: str) -
 
 def build_llm(model: str, temperature: float) -> ChatOpenAI:
     return ChatOpenAI(model=model, temperature=temperature)
+
+
+def resolve_message_text(content: Any) -> str:
+    """Normalize LangChain/OpenAI message content into plain text."""
+    if isinstance(content, str):
+        return content
+
+    if isinstance(content, list):
+        parts: list[str] = []
+        for item in content:
+            if isinstance(item, str):
+                parts.append(item)
+            elif isinstance(item, dict):
+                text = item.get("text")
+                if isinstance(text, str):
+                    parts.append(text)
+        return "\n".join(part for part in parts if part)
+
+    return str(content)

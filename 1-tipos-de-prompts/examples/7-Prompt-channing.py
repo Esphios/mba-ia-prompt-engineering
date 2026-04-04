@@ -1,4 +1,8 @@
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 load_dotenv()
 
 from langchain_openai import ChatOpenAI

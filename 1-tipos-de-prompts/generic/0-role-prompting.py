@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import argparse
 
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 from langchain.prompts import ChatPromptTemplate
 
 from common import DEFAULT_TASK, build_llm, print_llm_result, resolve_text

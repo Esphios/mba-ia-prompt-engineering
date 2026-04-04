@@ -2,7 +2,11 @@
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate
 from utils import print_llm_result
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 load_dotenv()
 
 system = ("system",

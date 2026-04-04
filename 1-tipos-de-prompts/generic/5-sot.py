@@ -2,9 +2,20 @@ from __future__ import annotations
 
 import argparse
 
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 
-from common import DEFAULT_TASK, SimpleResponse, build_llm, print_llm_result, resolve_text
+from common import (
+    DEFAULT_TASK,
+    SimpleResponse,
+    build_llm,
+    print_llm_result,
+    resolve_message_text,
+    resolve_text,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -31,7 +42,7 @@ Do not expand them yet.
 Task:
 {task}
 """
-    skeleton = llm.invoke(skeleton_prompt).content
+    skeleton = resolve_message_text(llm.invoke(skeleton_prompt).content)
 
     expansion_prompt = f"""
 Expand the skeleton below into a clear, well-structured final answer.
@@ -42,7 +53,7 @@ Task:
 Skeleton:
 {skeleton}
 """
-    expansion = llm.invoke(expansion_prompt).content
+    expansion = resolve_message_text(llm.invoke(expansion_prompt).content)
     content = f"STEP 1: SKELETON\n\n{skeleton}\n\nSTEP 2: EXPANDED ANSWER\n\n{expansion}"
     print_llm_result(task, SimpleResponse(content))
 
