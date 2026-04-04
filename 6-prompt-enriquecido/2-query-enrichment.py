@@ -2,7 +2,11 @@ import json
 from dataclasses import dataclass
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, Field
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*_args, **_kwargs) -> bool:
+        return False
 from langchain.chat_models import init_chat_model
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser, StrOutputParser
@@ -20,7 +24,7 @@ class EnrichmentConfig:
     max_rounds: int = 10
 
     # Define what information we want to collect
-    required_information: List[Dict[str, str]] = None
+    required_information: Optional[List[Dict[str, str]]] = None
 
     def __post_init__(self):
         if self.required_information is None:
@@ -60,9 +64,10 @@ class QueryEnricher:
         """Create the query enrichment chain"""
 
         # Build the list of required questions dynamically from config
+        required_information = self.config.required_information or []
         questions_text = "\n".join([
             f'  * "{info["question"]}"'
-            for info in self.config.required_information
+            for info in required_information
         ])
 
         enrichment_prompt = ChatPromptTemplate.from_messages([
