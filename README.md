@@ -1,88 +1,83 @@
 # Curso de Prompt Engineering
 
-Este repositório contém os exercícios práticos e exemplos da disciplina de Prompt Engineering do MBA em Engenharia de Software com IA.
+Este repositório reúne os materiais da disciplina de Prompt Engineering do MBA em Engenharia de Software com IA. A raiz funciona como índice do curso: ela explica a organização geral, aponta o papel de cada capítulo e orienta como navegar entre teoria, exemplos e workflows.
 
-## Estrutura dos capítulos
+## Como a documentação está organizada
 
-### 1-tipos-de-prompts
-Fundamentos de prompt engineering com 9 técnicas essenciais:
-- Role-based prompting
-- Zero-shot e Few-shot learning
-- Chain of Thought (CoT) e variações
-- Tree of Thoughts (ToT)
-- Skeleton of Thought (SoT)
-- ReAct framework
-- Prompt chaining
-- Least-to-most decomposition
+Cada capítulo deve seguir a mesma lógica documental:
 
-### 4-prompts-e-workflow-de-agentes
-Implementações de workflows baseados em agentes para:
-- Análise arquitetural de código
-- Auditoria de dependências
-- Orquestração de comandos entre agentes
+- `README.md`: visão geral do capítulo, estrutura da pasta, como estudar e como executar o que existir ali.
+- `AGENTS.md`: orientações curtas para agentes de IA que forem editar ou analisar aquele capítulo.
+- arquivo principal da aula: explicação aprofundada dos conceitos do capítulo.
+- `history.md`: contexto removido, decisões editoriais, nomenclaturas antigas e informações preservadas por rastreabilidade.
 
-### 5-gerenciamento-e-versionamento-de-prompts
-Sistema avançado de gerenciamento de prompts com:
-- Versionamento local usando YAML
-- Integração com LangSmith para colaboração
-- Agentes especializados para code review e criação de PRs
-- Testes automatizados com pytest
+Os nomes dos arquivos de aula variam por capítulo, por exemplo:
 
-### 6-prompt-enriquecido
-Técnicas avançadas de enriquecimento de prompts:
-- Query expansion
-- ITER-RETGEN (Iterative Retrieval Generation)
-- Enriquecimento contextual de queries
+- `1-tipos-de-prompts/tipos-de-prompts.md`
+- `2-conceitos-importantes/conceitos-importantes.md`
+- `3-estrutura-basica-dos-prompts/estrutura-basica-dos-prompts.md`
+- `4-prompts-e-workflow-de-agentes/prompts-e-workflow-de-agentes.md`
+- `5-gerenciamento-e-versionamento-de-prompts/gerenciamento-e-versionamento-de-prompts.md`
+- `6-prompt-enriquecido/prompt-enriquecido.md`
 
-### 7-evaluation
-Avaliação sistemática de prompts e LLMs:
-- Evaluators básicos (format, criteria, score, correctness, custom, embeddings)
-- Métricas de classificação (Precision, Recall, F1)
-- Comparação pairwise de prompts
-- Integração com LangSmith e Langfuse
+## Estrutura do curso
 
-## Configuração do Ambiente
+| Capítulo | Foco | Arquivo principal |
+| --- | --- | --- |
+| `1-tipos-de-prompts/` | técnicas clássicas de prompting | `tipos-de-prompts.md` |
+| `2-conceitos-importantes/` | contexto, custo, latência, cache e batch | `conceitos-importantes.md` |
+| `3-estrutura-basica-dos-prompts/` | estruturação profissional de prompts | `estrutura-basica-dos-prompts.md` |
+| `4-prompts-e-workflow-de-agentes/` | prompts especificados como workflow multiagente | `prompts-e-workflow-de-agentes.md` |
+| `5-gerenciamento-e-versionamento-de-prompts/` | versionamento, registry, testes e LangSmith | `gerenciamento-e-versionamento-de-prompts.md` |
+| `6-prompt-enriquecido/` | query enrichment e expansão iterativa | `prompt-enriquecido.md` |
+| `7-evaluation/` | avaliação com LangSmith e Langfuse | material próprio do capítulo |
 
-**Importante:** Cada pasta do curso é auto-contida, possuindo seu próprio ambiente virtual, arquivo de dependências (requirements.txt) e configuração de variáveis de ambiente (.env).
+Pastas auxiliares relevantes:
 
-### 1. Criar e Ativar Ambiente Virtual
+- `skills/`: skills usadas como material complementar do curso.
+- `TOSTUDY/`: materiais auxiliares de estudo.
+- `venv/`: ambiente local da raiz; não editar nem versionar conteúdo interno.
 
-```bash
-# Navegue até a pasta desejada
-cd [pasta-do-capítulo]
+## Como estudar
 
-# Criar ambiente virtual
+O fluxo recomendado é:
+
+1. Ler o `README.md` do capítulo para entender escopo e estrutura.
+2. Ler o arquivo principal da aula para estudar o conteúdo em profundidade.
+3. Consultar `history.md` apenas quando precisar de contexto removido, decisões editoriais ou nomenclaturas antigas.
+4. Executar exemplos e scripts do capítulo quando fizer sentido.
+
+## Setup da raiz
+
+```powershell
 python -m venv venv
-
-# Ativar ambiente virtual
-# No macOS/Linux:
-source venv/bin/activate
-
-# No Windows:
-venv\Scripts\activate
-```
-
-### 2. Instalar Dependências
-
-```bash
+.\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 ```
 
-### 3. Configuração das Variáveis de Ambiente
+Observações:
 
-```bash
-# Copiar arquivo de exemplo
-cp .env.example .env
+- a raiz tem `requirements.txt` e `.env.example`, mas vários capítulos são autocontidos;
+- quando um capítulo tiver `requirements.txt` próprio, ele prevalece dentro daquele escopo;
+- se um capítulo tiver `.env.example` próprio, use o arquivo local em vez do da raiz.
 
-# Editar o arquivo .env e adicionar suas chaves
-# Minimamente necessário: OPENAI_API_KEY=sua_chave_aqui
-```
-## Dependências Principais
+## Tecnologias principais
 
-As dependências variam entre os capítulos:
+| Categoria | Tecnologia | Uso no repositório |
+| --- | --- | --- |
+| Runtime | Python | scripts, exemplos e utilitários |
+| Orquestração LLM | LangChain, LangGraph | capítulos `1`, `5`, `6` e `7` |
+| Observabilidade | LangSmith, Langfuse | capítulos `5` e `7` |
+| CLI e suporte | Rich, PyYAML, pytest | saída formatada, configuração e testes |
 
-- **Capítulos 1 e 7:** LangChain 0.3.x (versão estável)
-- **Capítulos 5 e 6:** LangChain 1.0.0a5 com LangGraph para recursos avançados
-- **Capítulo 7:** LangSmith e Langfuse para evaluation
+## Regras gerais do repositório
 
-Para detalhes específicos de cada capítulo, consulte o arquivo `requirements.txt` correspondente.
+- Preserve a numeração dos capítulos e os nomes dos exemplos.
+- Não imponha abstrações compartilhadas sem evidência de que o curso realmente precisa disso.
+- Não edite `venv/` nem `.pytest_cache/`.
+- Se adicionar variáveis de ambiente, atualize o `.env.example` correspondente.
+- Materiais voltados ao curso devem permanecer em pt-BR.
+
+## Importância da raiz
+
+O objetivo da documentação da raiz não é repetir o conteúdo de cada aula em profundidade. Ela existe para manter o curso navegável, consistente e sustentável conforme novos capítulos, exemplos e skills forem sendo adicionados.
